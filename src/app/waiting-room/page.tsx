@@ -39,28 +39,42 @@ export default function WaitingRoomPage() {
 
     fetchPhrase();
 
+    const duration = 5000; // 5 seconds
+    const progressIntervalTime = 50; // Update progress every 50ms
+
     const progressInterval = setInterval(() => {
       setProgress(prev => {
-        const next = prev + (100 / 15) / (1000 / 100);
+        const next = prev + (progressIntervalTime / duration) * 100;
         if (next >= 100) {
           clearInterval(progressInterval);
-          router.push('/quiz');
           return 100;
         }
         return next;
       });
-    }, 100);
+    }, progressIntervalTime);
     
+    // Animate position to 0 over the duration
+    const startingPosition = 406;
+    const positionIntervalTime = 100; // Update position more frequently for smoother animation
+    const totalUpdates = duration / positionIntervalTime;
+    let updatesDone = 0;
+
     const positionInterval = setInterval(() => {
-      setPosition(prev => (prev > 1 ? prev - Math.floor(Math.random() * 5 + 1) : 1));
-    }, 500);
+        updatesDone++;
+        const newPosition = Math.round(startingPosition * (1 - (updatesDone / totalUpdates)));
+        setPosition(newPosition > 0 ? newPosition : 0);
+
+        if (newPosition <= 0) {
+            clearInterval(positionInterval);
+        }
+    }, positionIntervalTime);
 
     const phraseInterval = setInterval(fetchPhrase, 5000);
 
     // Countdown to redirect
     const redirectTimeout = setTimeout(() => {
       router.push('/quiz');
-    }, 15000);
+    }, duration);
 
     return () => {
       clearInterval(progressInterval);
