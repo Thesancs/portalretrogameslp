@@ -69,6 +69,22 @@ export default function QuizPage() {
     setAnswers(newAnswers);
   }
 
+  const handleAnswerSelection = (value: string) => {
+    setAnswer(step, value);
+    // Automatically move to the next question after a short delay
+    // to allow the user to see their selection.
+    setTimeout(() => {
+      handleNext();
+    }, 300);
+  };
+  
+  const handleTextAnswerAndNext = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(answers[step]) {
+        handleNext();
+    }
+  }
+
   const currentStep = quizSteps[step];
   const progressPercentage = ((step + 1) / quizSteps.length) * 100;
 
@@ -108,7 +124,7 @@ export default function QuizPage() {
                       height={267}
                       className="rounded-md border-4 border-secondary shadow-lg"
                     />
-                    <RadioGroup onValueChange={(value) => setAnswer(step, value)} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
+                    <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => (
                         <Label key={opt} htmlFor={opt} className="flex items-center justify-center p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
                           <RadioGroupItem value={opt} id={opt} className="sr-only" />
@@ -119,16 +135,21 @@ export default function QuizPage() {
                   </div>
                 )}
                 {currentStep.type === 'text' && (
-                  <Input 
-                    type="text" 
-                    placeholder={currentStep.placeholder}
-                    value={answers[step]}
-                    onChange={(e) => setAnswer(step, e.target.value)}
-                    className="text-lg text-center"
-                   />
+                  <form onSubmit={handleTextAnswerAndNext} className="flex flex-col items-center gap-4">
+                    <Input 
+                        type="text" 
+                        placeholder={currentStep.placeholder}
+                        value={answers[step]}
+                        onChange={(e) => setAnswer(step, e.target.value)}
+                        className="text-lg text-center"
+                    />
+                    <Button type="submit" disabled={!answers[step]}>
+                        Próximo
+                    </Button>
+                  </form>
                 )}
                 {currentStep.type === 'radio' && (
-                  <RadioGroup onValueChange={(value) => setAnswer(step, value)} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentStep.options?.map(opt => (
                        <Label key={opt} htmlFor={opt} className="flex items-center space-x-3 p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
                          <RadioGroupItem value={opt} id={opt} />
@@ -145,9 +166,18 @@ export default function QuizPage() {
           <Button variant="outline" onClick={handleBack} disabled={step === 0}>
             Voltar
           </Button>
-          <Button onClick={handleNext} disabled={!answers[step]}>
-            {step === quizSteps.length - 1 ? 'Ver Resultado' : 'Próximo'}
-          </Button>
+          <div className='w-24'>
+            {step < quizSteps.length -1 && currentStep.type !== 'text' && (
+                <Button onClick={handleNext} disabled={!answers[step]}>
+                    Próximo
+                </Button>
+            )}
+             {step === quizSteps.length - 1 && (
+                <Button onClick={handleNext} disabled={!answers[step]}>
+                    Ver Resultado
+                </Button>
+            )}
+          </div>
         </CardFooter>
       </Card>
       </main>
