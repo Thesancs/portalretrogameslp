@@ -103,7 +103,7 @@ export default function CheckoutPage() {
             </CardContent>
             <div className="p-6 text-center">
                  <Button onClick={handlePurchase} size="lg" className="w-full md:w-auto btn-pixel-accent !text-lg">
-                    Finalizar Compra e Jogar Agora
+                    Finalizar compra
                  </Button>
             </div>
           </Card>
