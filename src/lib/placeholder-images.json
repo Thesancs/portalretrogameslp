@@ -29,6 +29,30 @@
       "description": "Image of a stack of retro game cartridges.",
       "imageUrl": "https://images.unsplash.com/photo-1715294925583-4dea3a1f5789?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYW1lJTIwY2FydHJpZGdlc3xlbnwwfHx8fDE3NjA3ODk2Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "game cartridges"
+    },
+    {
+      "id": "entry-image-1",
+      "description": "A close-up of a Super Nintendo controller",
+      "imageUrl": "https://images.unsplash.com/photo-1627827963820-089a37e00291?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzbmVzJTIwY29udHJvbGxlcnxlbnwwfHx8fDE3NjA3OTAyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "snes controller"
+    },
+    {
+      "id": "entry-image-2",
+      "description": "The original PlayStation console menu screen",
+      "imageUrl": "https://images.unsplash.com/photo-1573788708917-3d447b0d6271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwbGF5c3RhdGlvbiUyMG1lbnV8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "playstation menu"
+    },
+    {
+      "id": "entry-image-3",
+      "description": "A character from a classic 16-bit RPG game",
+      "imageUrl": "https://images.unsplash.com/photo-1590308272905-e1a8b1555915?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxycGclMjBjaGFyYWN0ZXJ8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rpg character"
+    },
+    {
+      "id": "entry-image-4",
+      "description": "An arcade cabinet in a dark room",
+      "imageUrl": "https://images.unsplash.com/photo-1759171053096-e7dbe7c36eb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcmNhZGUlMjBjYWJpbmV0fGVufDB8fHx8MTc2MDc5MDI3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "arcade cabinet"
     }
   ]
 }
