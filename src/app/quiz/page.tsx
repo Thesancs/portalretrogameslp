@@ -38,8 +38,8 @@ const quizSteps = [
   },
   {
     question: "Com quem você gostaria de reviver esses momentos?",
-    type: "text",
-    placeholder: "Um amigo de infância, irmão, etc."
+    type: "radio",
+    options: ["Sozinho, no meu ritmo", "Com amigos da antiga", "Com minha família/parceiro(a)", "Com a comunidade online"]
   }
 ];
 
