@@ -108,12 +108,12 @@ export default function QuizPage() {
                       height={267}
                       className="rounded-md border-4 border-secondary shadow-lg"
                     />
-                    <RadioGroup onValueChange={(value) => setAnswer(step, value)} value={answers[step]} className="flex flex-col md:flex-row gap-4 pt-4">
+                    <RadioGroup onValueChange={(value) => setAnswer(step, value)} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => (
-                        <div key={opt} className="flex items-center space-x-2">
-                          <RadioGroupItem value={opt} id={opt} />
-                          <Label htmlFor={opt} className="text-base">{opt}</Label>
-                        </div>
+                        <Label key={opt} htmlFor={opt} className="flex items-center justify-center p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
+                          <RadioGroupItem value={opt} id={opt} className="sr-only" />
+                          <span>{opt}</span>
+                        </Label>
                       ))}
                     </RadioGroup>
                   </div>
