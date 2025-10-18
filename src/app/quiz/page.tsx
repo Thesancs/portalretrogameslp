@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -13,6 +14,10 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Header from '@/components/app/header';
 
 const quizImage = PlaceHolderImages.find(p => p.id === 'quiz-game-scene')!;
+const snesImage = PlaceHolderImages.find(p => p.id === 'console-snes')!;
+const ps1Image = PlaceHolderImages.find(p => p.id === 'console-ps1')!;
+const n64Image = PlaceHolderImages.find(p => p.id === 'console-n64')!;
+const megaDriveImage = PlaceHolderImages.find(p => p.id === 'console-megadrive')!;
 
 const quizSteps = [
   {
@@ -22,8 +27,14 @@ const quizSteps = [
   },
   {
     question: "Qual foi seu primeiro console?",
-    type: "radio",
-    options: ["Super Nintendo", "PlayStation 1", "Nintendo 64", "Mega Drive", "Outro"]
+    type: "console-select",
+    options: [
+      { label: "Super Nintendo", image: snesImage },
+      { label: "PlayStation 1", image: ps1Image },
+      { label: "Nintendo 64", image: n64Image },
+      { label: "Mega Drive", image: megaDriveImage },
+      { label: "Outro" }
+    ]
   },
   {
     question: "Onde você mais jogava?",
@@ -95,14 +106,14 @@ export default function QuizPage() {
         <CardHeader className="text-center">
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>
           <CardTitle className="text-2xl md:text-3xl font-bold">
-            YOU STILL GOT THE GAMER BLOOD?
+            {currentStep.question}
           </CardTitle>
           <CardDescription>Responda para desbloquear suas memórias.</CardDescription>
         </CardHeader>
         <div className="px-6">
             <Progress value={progressPercentage} className="w-full h-2" />
         </div>
-        <CardContent className="p-6 min-h-[300px]">
+        <CardContent className="p-6 min-h-[300px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -110,8 +121,8 @@ export default function QuizPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
+              className="w-full"
             >
-              <h3 className="text-xl font-semibold mb-6 text-center">{currentStep.question}</h3>
               <div className="space-y-4">
                 {currentStep.type === 'image' && (
                   <div className="flex flex-col items-center space-y-4">
@@ -125,20 +136,40 @@ export default function QuizPage() {
                     />
                     <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => (
-                        <Label key={opt} htmlFor={opt} className="flex items-center justify-center p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
-                          <RadioGroupItem value={opt} id={opt} className="sr-only" />
-                          <span>{opt}</span>
+                        <Label key={opt as string} htmlFor={opt as string} className="flex items-center justify-center p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
+                          <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" />
+                          <span>{opt as string}</span>
                         </Label>
                       ))}
                     </RadioGroup>
                   </div>
                 )}
+                {currentStep.type === 'console-select' && (
+                  <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {currentStep.options?.map((opt: any) => (
+                      <Label key={opt.label} htmlFor={opt.label} className="flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
+                        <RadioGroupItem value={opt.label} id={opt.label} className="sr-only" />
+                        {opt.image && (
+                          <Image
+                            src={opt.image.imageUrl}
+                            alt={opt.image.description}
+                            data-ai-hint={opt.image.imageHint}
+                            width={200}
+                            height={150}
+                            className="rounded-md object-cover aspect-[4/3] mb-2"
+                          />
+                        )}
+                        <span className="font-semibold">{opt.label}</span>
+                      </Label>
+                    ))}
+                  </RadioGroup>
+                )}
                 {currentStep.type === 'radio' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentStep.options?.map(opt => (
-                       <Label key={opt} htmlFor={opt} className="flex items-center space-x-3 p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
-                         <RadioGroupItem value={opt} id={opt} />
-                         <span>{opt}</span>
+                       <Label key={opt as string} htmlFor={opt as string} className="flex items-center space-x-3 p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
+                         <RadioGroupItem value={opt as string} id={opt as string} />
+                         <span>{opt as string}</span>
                        </Label>
                     ))}
                   </RadioGroup>
