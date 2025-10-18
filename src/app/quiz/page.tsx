@@ -22,9 +22,9 @@ const quizSteps = [
     options: ["Sim, com certeza!", "Acho que não...", "Talvez..."]
   },
   {
-    question: "Qual foi o primeiro jogo que realmente te marcou?",
-    type: "text",
-    placeholder: "Ex: Super Mario 64, Final Fantasy VII..."
+    question: "Qual foi seu primeiro console?",
+    type: "radio",
+    options: ["Super Nintendo", "PlayStation 1", "Nintendo 64", "Mega Drive", "Outro"]
   },
   {
     question: "Onde você mais jogava?",
