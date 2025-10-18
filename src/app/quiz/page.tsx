@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -134,20 +133,6 @@ export default function QuizPage() {
                     </RadioGroup>
                   </div>
                 )}
-                {currentStep.type === 'text' && (
-                  <form onSubmit={handleTextAnswerAndNext} className="flex flex-col items-center gap-4">
-                    <Input 
-                        type="text" 
-                        placeholder={currentStep.placeholder}
-                        value={answers[step]}
-                        onChange={(e) => setAnswer(step, e.target.value)}
-                        className="text-lg text-center"
-                    />
-                    <Button type="submit" disabled={!answers[step]}>
-                        Próximo
-                    </Button>
-                  </form>
-                )}
                 {currentStep.type === 'radio' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentStep.options?.map(opt => (
@@ -166,12 +151,7 @@ export default function QuizPage() {
           <Button variant="outline" onClick={handleBack} disabled={step === 0}>
             Voltar
           </Button>
-          <div className='w-24'>
-            {step < quizSteps.length -1 && currentStep.type !== 'text' && (
-                <Button onClick={handleNext} disabled={!answers[step]}>
-                    Próximo
-                </Button>
-            )}
+          <div className='w-24 text-right'>
              {step === quizSteps.length - 1 && (
                 <Button onClick={handleNext} disabled={!answers[step]}>
                     Ver Resultado
