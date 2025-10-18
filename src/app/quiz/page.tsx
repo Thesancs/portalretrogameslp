@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -56,20 +57,25 @@ const quizSteps = [
 export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
+  const [animatingOption, setAnimatingOption] = useState<string | null>(null);
+  const [isWrong, setIsWrong] = useState<string | null>(null);
   const router = useRouter();
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
       setStep(step + 1);
     } else {
-      // Submit logic here
       router.push('/results');
     }
+     setAnimatingOption(null);
+     setIsWrong(null);
   };
 
   const handleBack = () => {
     if (step > 0) {
       setStep(step - 1);
+      setAnimatingOption(null);
+      setIsWrong(null);
     }
   };
   
@@ -80,12 +86,22 @@ export default function QuizPage() {
   }
 
   const handleAnswerSelection = (value: string) => {
+    if (animatingOption) return; // Prevent clicking while animating
+
     setAnswer(step, value);
-    // Automatically move to the next question after a short delay
-    // to allow the user to see their selection.
+    setAnimatingOption(value);
+
+    // Animation sequence
+    // 1. Glow animation (1.2s total for 3 pulses)
     setTimeout(() => {
-      handleNext();
-    }, 300);
+      setIsWrong(value); // Turn red
+      
+      // 2. Wait for a moment while red (0.5s)
+      setTimeout(() => {
+        handleNext();
+      }, 500);
+
+    }, 1200); 
   };
   
   const handleTextAnswerAndNext = (e: React.FormEvent) => {
@@ -135,20 +151,51 @@ export default function QuizPage() {
                       className="rounded-md border-4 border-secondary shadow-lg"
                     />
                     <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
-                      {currentStep.options?.map(opt => (
-                        <Label key={opt as string} htmlFor={opt as string} className="flex items-center justify-center p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
-                          <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" />
-                          <span>{opt as string}</span>
-                        </Label>
-                      ))}
+                      {currentStep.options?.map(opt => {
+                        const isAnimating = animatingOption === opt;
+                        const isMarkedWrong = isWrong === opt;
+                        return (
+                           <Label 
+                            key={opt as string} 
+                            htmlFor={opt as string} 
+                            className={cn(
+                                "flex items-center justify-center p-4 border rounded-md cursor-pointer transition-all duration-300",
+                                "hover:bg-muted/50",
+                                {
+                                    "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating && !isMarkedWrong,
+                                    "animate-pulse-glow": isAnimating,
+                                    "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                                }
+                            )}
+                          >
+                            <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
+                            <span>{opt as string}</span>
+                           </Label>
+                        )
+                      })}
                     </RadioGroup>
                   </div>
                 )}
                 {currentStep.type === 'console-select' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {currentStep.options?.map((opt: any) => (
-                      <Label key={opt.label} htmlFor={opt.label} className="flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
-                        <RadioGroupItem value={opt.label} id={opt.label} className="sr-only" />
+                    {currentStep.options?.map((opt: any) => {
+                       const isAnimating = animatingOption === opt.label;
+                       const isMarkedWrong = isWrong === opt.label;
+                       return (
+                      <Label 
+                        key={opt.label} 
+                        htmlFor={opt.label} 
+                        className={cn(
+                            "flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer transition-all duration-300",
+                            "hover:bg-muted/50",
+                            {
+                               "bg-primary text-primary-foreground border-primary": answers[step] === opt.label && !isAnimating && !isMarkedWrong,
+                                "animate-pulse-glow": isAnimating,
+                                "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                            }
+                        )}
+                        >
+                        <RadioGroupItem value={opt.label} id={opt.label} className="sr-only" onClick={() => handleAnswerSelection(opt.label)} />
                         {opt.image && (
                           <Image
                             src={opt.image.imageUrl}
@@ -161,17 +208,34 @@ export default function QuizPage() {
                         )}
                         <span className="font-semibold">{opt.label}</span>
                       </Label>
-                    ))}
+                       )
+                    })}
                   </RadioGroup>
                 )}
                 {currentStep.type === 'radio' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentStep.options?.map(opt => (
-                       <Label key={opt as string} htmlFor={opt as string} className="flex items-center space-x-3 p-4 border rounded-md cursor-pointer hover:bg-muted/50 has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary">
-                         <RadioGroupItem value={opt as string} id={opt as string} />
+                    {currentStep.options?.map(opt => {
+                        const isAnimating = animatingOption === opt;
+                        const isMarkedWrong = isWrong === opt;
+                        return (
+                       <Label 
+                        key={opt as string} 
+                        htmlFor={opt as string} 
+                        className={cn(
+                            "flex items-center space-x-3 p-4 border rounded-md cursor-pointer transition-all duration-300",
+                            "hover:bg-muted/50",
+                            {
+                                "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating && !isMarkedWrong,
+                                "animate-pulse-glow": isAnimating,
+                                "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                            }
+                        )}
+                       >
+                         <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
                          <span>{opt as string}</span>
                        </Label>
-                    ))}
+                        )
+                    })}
                   </RadioGroup>
                 )}
               </div>
