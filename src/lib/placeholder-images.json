@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "quiz-game-scene",
+      "description": "A scene from a classic retro video game.",
+      "imageUrl": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZXRybyUyMGdhbWV8ZW58MHx8fHwxNzYwNzg5Njc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "retro game"
+    },
+    {
+      "id": "sales-gameplay-1",
+      "description": "Gameplay footage from a pixel art game.",
+      "imageUrl": "https://images.unsplash.com/photo-1608741869829-8eb30661c7be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwaXhlbCUyMGdhbWV8ZW58MHx8fHwxNzYwNzQwNTAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pixel game"
+    },
+    {
+      "id": "sales-gameplay-2",
+      "description": "Gameplay footage from an arcade game.",
+      "imageUrl": "https://images.unsplash.com/photo-1533236098109-273df099b421?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcmNhZGUlMjBnYW1lfGVufDB8fHx8MTc2MDc0MTIzOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "arcade game"
+    },
+    {
+      "id": "sales-gameplay-3",
+      "description": "Gameplay footage from an 8-bit game.",
+      "imageUrl": "https://images.unsplash.com/photo-1593119111396-04f1f2a37edd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHw4LWJpdCUyMGdhbWV8ZW58MHx8fHwxNzYwNzg5Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "8-bit game"
+    },
+    {
+      "id": "checkout-bonus",
+      "description": "Image of a stack of retro game cartridges.",
+      "imageUrl": "https://images.unsplash.com/photo-1715294925583-4dea3a1f5789?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYW1lJTIwY2FydHJpZGdlc3xlbnwwfHx8fDE3NjA3ODk2Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "game cartridges"
+    }
+  ]
 }
