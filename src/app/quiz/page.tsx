@@ -58,7 +58,6 @@ export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
-  const [isWrong, setIsWrong] = useState<string | null>(null);
   const router = useRouter();
 
   const handleNext = () => {
@@ -68,14 +67,12 @@ export default function QuizPage() {
       router.push('/results');
     }
      setAnimatingOption(null);
-     setIsWrong(null);
   };
 
   const handleBack = () => {
     if (step > 0) {
       setStep(step - 1);
       setAnimatingOption(null);
-      setIsWrong(null);
     }
   };
   
@@ -92,15 +89,10 @@ export default function QuizPage() {
     setAnimatingOption(value);
 
     // Animation sequence
-    // 1. Glow animation (1.2s total for 3 pulses)
+    // 1. Flash red animation (1.2s total for 3 flashes)
     setTimeout(() => {
-      setIsWrong(value); // Turn red
-      
-      // 2. Wait for a moment while red (0.5s)
-      setTimeout(() => {
-        handleNext();
-      }, 500);
-
+      // 2. Go to next question after animation
+      handleNext();
     }, 1200); 
   };
   
@@ -153,7 +145,6 @@ export default function QuizPage() {
                     <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => {
                         const isAnimating = animatingOption === opt;
-                        const isMarkedWrong = isWrong === opt;
                         return (
                            <Label 
                             key={opt as string} 
@@ -162,9 +153,8 @@ export default function QuizPage() {
                                 "flex items-center justify-center p-4 border rounded-md cursor-pointer transition-all duration-300",
                                 "hover:bg-muted/50",
                                 {
-                                    "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating && !isMarkedWrong,
-                                    "animate-pulse-glow": isAnimating,
-                                    "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                                    "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating,
+                                    "animate-flash-red": isAnimating,
                                 }
                             )}
                           >
@@ -180,7 +170,6 @@ export default function QuizPage() {
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {currentStep.options?.map((opt: any) => {
                        const isAnimating = animatingOption === opt.label;
-                       const isMarkedWrong = isWrong === opt.label;
                        return (
                       <Label 
                         key={opt.label} 
@@ -189,9 +178,8 @@ export default function QuizPage() {
                             "flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer transition-all duration-300",
                             "hover:bg-muted/50",
                             {
-                               "bg-primary text-primary-foreground border-primary": answers[step] === opt.label && !isAnimating && !isMarkedWrong,
-                                "animate-pulse-glow": isAnimating,
-                                "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                               "bg-primary text-primary-foreground border-primary": answers[step] === opt.label && !isAnimating,
+                                "animate-flash-red": isAnimating,
                             }
                         )}
                         >
@@ -216,7 +204,6 @@ export default function QuizPage() {
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentStep.options?.map(opt => {
                         const isAnimating = animatingOption === opt;
-                        const isMarkedWrong = isWrong === opt;
                         return (
                        <Label 
                         key={opt as string} 
@@ -225,9 +212,8 @@ export default function QuizPage() {
                             "flex items-center space-x-3 p-4 border rounded-md cursor-pointer transition-all duration-300",
                             "hover:bg-muted/50",
                             {
-                                "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating && !isMarkedWrong,
-                                "animate-pulse-glow": isAnimating,
-                                "bg-destructive text-destructive-foreground border-destructive": isMarkedWrong
+                                "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating,
+                                "animate-flash-red": isAnimating,
                             }
                         )}
                        >
