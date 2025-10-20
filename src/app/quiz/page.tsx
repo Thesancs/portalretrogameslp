@@ -110,7 +110,7 @@ export default function QuizPage() {
     <>
     <Header />
     <main className="container mx-auto px-4 py-8 flex items-center justify-center">
-      <Card className="w-full max-w-2xl overflow-hidden">
+      <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption })}>
         <CardHeader className="text-center">
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>
           <CardTitle className="text-2xl md:text-3xl font-bold">
@@ -144,18 +144,15 @@ export default function QuizPage() {
                     />
                     <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => {
-                        const isAnimating = animatingOption === opt;
                         return (
                            <Label 
                             key={opt as string} 
                             htmlFor={opt as string} 
                             className={cn(
-                                "flex items-center justify-center p-4 border rounded-md cursor-pointer transition-all duration-300",
-                                "hover:bg-muted/50",
-                                {
-                                    "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating,
-                                    "animate-flash-red": isAnimating,
-                                }
+                              "btn-pixel !font-body !text-base !font-normal !normal-case tracking-normal text-center justify-center",
+                              {
+                                "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === opt
+                              }
                             )}
                           >
                             <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
@@ -168,21 +165,17 @@ export default function QuizPage() {
                 )}
                 {currentStep.type === 'console-select' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {currentStep.options?.map((opt: any) => {
-                       const isAnimating = animatingOption === opt.label;
-                       return (
+                    {currentStep.options?.map((opt: any) => (
                       <Label 
                         key={opt.label} 
                         htmlFor={opt.label} 
                         className={cn(
-                            "flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer transition-all duration-300",
-                            "hover:bg-muted/50",
-                            {
-                               "bg-primary text-primary-foreground border-primary": answers[step] === opt.label && !isAnimating,
-                                "animate-flash-red": isAnimating,
-                            }
+                          "flex flex-col items-center justify-center p-2 border rounded-md cursor-pointer transition-all duration-300 hover:bg-muted/50",
+                          {
+                            "bg-primary text-primary-foreground border-primary": answers[step] === opt.label,
+                          }
                         )}
-                        >
+                      >
                         <RadioGroupItem value={opt.label} id={opt.label} className="sr-only" onClick={() => handleAnswerSelection(opt.label)} />
                         {opt.image && (
                           <Image
@@ -196,32 +189,26 @@ export default function QuizPage() {
                         )}
                         <span className="font-semibold">{opt.label}</span>
                       </Label>
-                       )
-                    })}
+                    ))}
                   </RadioGroup>
                 )}
                 {currentStep.type === 'radio' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentStep.options?.map(opt => {
-                        const isAnimating = animatingOption === opt;
-                        return (
+                    {currentStep.options?.map(opt => (
                        <Label 
                         key={opt as string} 
                         htmlFor={opt as string} 
                         className={cn(
-                            "flex items-center space-x-3 p-4 border rounded-md cursor-pointer transition-all duration-300",
-                            "hover:bg-muted/50",
-                            {
-                                "bg-primary text-primary-foreground border-primary": answers[step] === opt && !isAnimating,
-                                "animate-flash-red": isAnimating,
-                            }
+                           "btn-pixel !font-body !text-sm !font-normal !normal-case tracking-normal text-center justify-center",
+                           {
+                                "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === opt
+                           }
                         )}
                        >
                          <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
                          <span>{opt as string}</span>
                        </Label>
-                        )
-                    })}
+                    ))}
                   </RadioGroup>
                 )}
               </div>
@@ -245,3 +232,5 @@ export default function QuizPage() {
     </>
   );
 }
+
+    
