@@ -134,4 +134,19 @@
       border-color: hsl(var(--destructive));
     }
   }
+
+  .animate-pulse-press {
+    animation: pulse-press 1.5s infinite ease-in-out;
+  }
+
+  @keyframes pulse-press {
+    0%, 100% {
+      transform: translate(0, 0);
+      box-shadow: inset -4px -4px 0px 0px hsl(var(--foreground) / 0.2);
+    }
+    50% {
+      transform: translate(3px, 3px);
+      box-shadow: inset -6px -6px 0px 0px hsl(var(--foreground) / 0.2);
+    }
+  }
 }
