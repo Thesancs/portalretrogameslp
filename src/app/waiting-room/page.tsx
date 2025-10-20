@@ -1,122 +1,104 @@
+
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getDynamicPhrase } from '@/app/actions';
-
-const nostalgicTopics = ["SNES", "PS1", "arcade", "N64", "Game Boy"];
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function WaitingRoomPage() {
-  const [position, setPosition] = useState(406);
-  const [progress, setProgress] = useState(0);
-  const [currentPhrase, setCurrentPhrase] = useState("Carregando memórias...");
+  const [position, setPosition] = useState(3127);
+  const [showButton, setShowButton] = useState(false);
   const router = useRouter();
 
-  const phrases = useMemo(() => [
-    "Collecting stars, racing karts, and saving princesses in glorious 64-bit.",
-    "Blowing into cartridges to make them work... the original bug fix.",
-    "Remember the sound of a dial-up modem? That's how we did online gaming.",
-    "The satisfaction of a perfect combo in Street Fighter II.",
-    "Spending hours in a video rental store choosing the weekend's game."
-  ], []);
-
   useEffect(() => {
-    const fetchPhrase = async () => {
-      const randomTopic = nostalgicTopics[Math.floor(Math.random() * nostalgicTopics.length)];
-      try {
-        const phrase = await getDynamicPhrase(randomTopic);
-        setCurrentPhrase(phrase);
-      } catch (error) {
-        // Fallback to a random phrase from the static list
-        const randomIndex = Math.floor(Math.random() * phrases.length);
-        setCurrentPhrase(phrases[randomIndex]);
-      }
-    };
-
-    fetchPhrase();
-
-    const duration = 5000; // 5 seconds
-    const progressIntervalTime = 50; // Update progress every 50ms
-
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        const next = prev + (progressIntervalTime / duration) * 100;
-        if (next >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return next;
-      });
-    }, progressIntervalTime);
-    
-    // Animate position to 0 over the duration
-    const startingPosition = 406;
-    const positionIntervalTime = 100; // Update position more frequently for smoother animation
-    const totalUpdates = duration / positionIntervalTime;
-    let updatesDone = 0;
-
+    // Simulate position decrease
     const positionInterval = setInterval(() => {
-        updatesDone++;
-        const newPosition = Math.round(startingPosition * (1 - (updatesDone / totalUpdates)));
-        setPosition(newPosition > 0 ? newPosition : 0);
-
+      setPosition(prev => {
+        const decrease = Math.floor(Math.random() * 50) + 20;
+        const newPosition = prev - decrease;
         if (newPosition <= 0) {
-            clearInterval(positionInterval);
+          clearInterval(positionInterval);
+          return 0;
         }
-    }, positionIntervalTime);
+        return newPosition;
+      });
+    }, 3000); // Updates every 3 seconds
 
-    const phraseInterval = setInterval(fetchPhrase, 5000);
-
-    // Countdown to redirect
-    const redirectTimeout = setTimeout(() => {
-      router.push('/quiz');
-    }, duration);
-
+    // Show button after 10 seconds
+    const buttonTimeout = setTimeout(() => {
+      setShowButton(true);
+    }, 10000);
+    
+    // Cleanup intervals and timeouts on component unmount
     return () => {
-      clearInterval(progressInterval);
       clearInterval(positionInterval);
-      clearInterval(phraseInterval);
-      clearTimeout(redirectTimeout);
+      clearTimeout(buttonTimeout);
     };
-  }, [router, phrases]);
+  }, []);
+
+  const handleEnterPortal = () => {
+    router.push('/quiz');
+  };
 
   return (
-    <>
-      <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
-        <Card className="w-full max-w-lg text-center shadow-2xl border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-2xl font-headline">Você entrou na fila para o acesso...</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="relative">
-              <div className="font-pixel text-7xl text-glow text-primary">{position}</div>
-              <p className="text-muted-foreground -mt-2">Sua posição na fila</p>
-            </div>
-            
-            <div className="space-y-2">
-                <Progress value={progress} className="w-full h-4" />
-            </div>
+    <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
+      <Card className="w-full max-w-2xl text-center shadow-2xl border-primary/20 bg-card/80 backdrop-blur-sm">
+        <CardContent className="p-6 md:p-8 space-y-6">
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-2xl md:text-3xl font-headline text-primary text-glow mb-4">
+                🍄✨ "A Jornada Começa..."
+              </h2>
 
-            <div className="h-12 flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={currentPhrase}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-lg italic text-accent"
+              <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
+                <p>🎵 Você lembra disso, né?</p>
+                <p>Esse som... essa melodia...<br />Já fez você sorrir.<br />Já te teleportou pra outro mundo, mesmo sentado no chão da sala.</p>
+                <p>Hoje, ela volta.<br />Não pra te entreter.<br />Mas pra te lembrar de quem você era quando tudo era simples, divertido e mágico.</p>
+              </div>
+
+              <div className="my-8 p-4 bg-muted/50 rounded-lg border border-dashed border-accent/50 space-y-4">
+                <p className="text-lg font-semibold text-accent">
+                  🟨 Você está na fila para acessar o Portal Gamer do Passado™
+                </p>
+                <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
+                    <span>🔄 Carregando...</span>
+                    <span>Posição: <span className='text-primary text-glow'>{position}</span></span>
+                </div>
+              </div>
+
+              <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
+                <p>Enquanto o portal se abre, respira fundo...<br/>Deixa essa trilha invadir teu coração...</p>
+                <p>Porque o próximo passo... é reviver tudo aquilo que você achou que tinha esquecido. 🍄</p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="h-16 flex items-center justify-center pt-4">
+            <AnimatePresence>
+              {showButton && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  "{currentPhrase}"
-                </motion.p>
-              </AnimatePresence>
-            </div>
-          </CardContent>
-        </Card>
-      </main>
-    </>
+                  <Button
+                    onClick={handleEnterPortal}
+                    className="btn-pixel-accent !text-lg !px-8 !py-5 animate-pulse-press"
+                  >
+                    👉 ENTRAR NO PORTAL
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </CardContent>
+      </Card>
+    </main>
   );
 }
