@@ -11,7 +11,7 @@ export default function EntryPage() {
   return (
     <main className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-screen text-center">
       
-        <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow">
+        <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">
           Se você lembra desses jogos, prepare-se...
         </h1>
         <p className="text-lg text-muted-foreground mb-8">
