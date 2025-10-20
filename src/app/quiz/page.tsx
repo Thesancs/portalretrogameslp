@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Header from '@/components/app/header';
+import * as Tone from 'tone';
 
 const quizImage = PlaceHolderImages.find(p => p.id === 'quiz-game-scene')!;
 const snesImage = PlaceHolderImages.find(p => p.id === 'console-snes')!;
@@ -54,11 +55,42 @@ const quizSteps = [
   }
 ];
 
+let selectionSynth: Tone.Synth;
+
 export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
   const router = useRouter();
+
+  const initializeAudio = useCallback(async () => {
+    if (isInitialized) return;
+    
+    await Tone.start();
+    
+    selectionSynth = new Tone.Synth({
+      oscillator: {
+        type: 'sine',
+      },
+      envelope: {
+        attack: 0.01,
+        decay: 0.2,
+        sustain: 0.1,
+        release: 0.2,
+      },
+    }).toDestination();
+    
+    setIsInitialized(true);
+  }, [isInitialized]);
+
+  useEffect(() => {
+    initializeAudio();
+
+    return () => {
+      selectionSynth?.dispose();
+    };
+  }, [initializeAudio]);
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
@@ -84,6 +116,10 @@ export default function QuizPage() {
 
   const handleAnswerSelection = (value: string) => {
     if (animatingOption) return; // Prevent clicking while animating
+    
+    if (isInitialized && selectionSynth) {
+      selectionSynth.triggerAttackRelease('C5', '16n');
+    }
 
     setAnswer(step, value);
     setAnimatingOption(value);
@@ -232,5 +268,3 @@ export default function QuizPage() {
     </>
   );
 }
-
-    
