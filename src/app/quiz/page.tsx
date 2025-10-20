@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Header from '@/components/app/header';
 import * as Tone from 'tone';
+import { SoundContext } from '@/context/sound-context';
 
 const quizImage = PlaceHolderImages.find(p => p.id === 'quiz-game-scene')!;
 const snesImage = PlaceHolderImages.find(p => p.id === 'console-snes')!;
@@ -61,13 +61,17 @@ export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const router = useRouter();
+  const soundContext = useContext(SoundContext);
 
-  const initializeAudio = useCallback(async () => {
-    if (isInitialized) return;
+  const initializeQuizAudio = useCallback(async () => {
+    if (isAudioInitialized) return;
     
-    await Tone.start();
+    // Tone.start might already be called by the global context
+    if (soundContext && !soundContext.isInitialized) {
+      await Tone.start();
+    }
     
     selectionSynth = new Tone.Synth({
       oscillator: {
@@ -81,16 +85,16 @@ export default function QuizPage() {
       },
     }).toDestination();
     
-    setIsInitialized(true);
-  }, [isInitialized]);
+    setIsAudioInitialized(true);
+  }, [isAudioInitialized, soundContext]);
 
   useEffect(() => {
-    initializeAudio();
+    initializeQuizAudio();
 
     return () => {
       selectionSynth?.dispose();
     };
-  }, [initializeAudio]);
+  }, [initializeQuizAudio]);
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
@@ -117,7 +121,7 @@ export default function QuizPage() {
   const handleAnswerSelection = (value: string) => {
     if (animatingOption) return; // Prevent clicking while animating
     
-    if (isInitialized && selectionSynth) {
+    if (soundContext?.isSoundOn && isAudioInitialized && selectionSynth) {
       selectionSynth.triggerAttackRelease('C5', '16n');
     }
 
@@ -144,8 +148,7 @@ export default function QuizPage() {
 
   return (
     <>
-    <Header />
-    <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+    <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
       <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption })}>
         <CardHeader className="text-center">
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>

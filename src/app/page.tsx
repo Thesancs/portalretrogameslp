@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Header from '@/components/app/header';
 
 const entryImages = PlaceHolderImages.filter(p => p.id.startsWith('entry-'));
 
@@ -11,7 +10,6 @@ export default function EntryPage() {
 
   return (
     <>
-      <Header />
       <main className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-center">
         
           <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">

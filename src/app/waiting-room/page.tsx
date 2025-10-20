@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getDynamicPhrase } from '@/app/actions';
-import Header from '@/components/app/header';
 
 const nostalgicTopics = ["SNES", "PS1", "arcade", "N64", "Game Boy"];
 
@@ -86,8 +85,7 @@ export default function WaitingRoomPage() {
 
   return (
     <>
-      <Header />
-      <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-80px)]">
+      <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
         <Card className="w-full max-w-lg text-center shadow-2xl border-primary/20">
           <CardHeader>
             <CardTitle className="text-2xl font-headline">Você entrou na fila para o acesso...</CardTitle>

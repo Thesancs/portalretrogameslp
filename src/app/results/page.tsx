@@ -1,19 +1,17 @@
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
-import Header from '@/components/app/header';
 
 export default function ResultsPage() {
   return (
     <>
-    <Header />
-    <main className="container mx-auto px-4 py-8 flex-grow flex items-center">
+    <main className="container mx-auto px-4 py-8 flex-grow flex items-center min-h-[calc(100vh-128px)]">
       <div className="text-center w-full max-w-3xl mx-auto space-y-8">
         <div className="relative inline-block">
             <CheckCircle className="h-24 w-24 text-accent animate-pulse" />
         </div>
         
         <h2 
-            className="text-4xl sm:text-5xl md:text-7xl font-pixel uppercase text-glow text-primary"
+            className="text-4xl sm:text-5xl md:text-6xl font-pixel uppercase text-glow text-primary"
         >
             Memória Desbloqueada!
         </h2>

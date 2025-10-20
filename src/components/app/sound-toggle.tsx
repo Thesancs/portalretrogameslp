@@ -1,74 +1,18 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import * as Tone from 'tone';
+import { useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@/components/app/pixel-art-icons';
-
-let synth: Tone.PolySynth;
-let sequence: Tone.Sequence;
+import { SoundContext } from '@/context/sound-context';
 
 const SoundToggle = () => {
-  const [isSoundOn, setIsSoundOn] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const soundContext = useContext(SoundContext);
 
-  const initializeAudio = useCallback(async () => {
-    if (isInitialized) return;
-    
-    await Tone.start();
-    
-    synth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: {
-        type: 'square8',
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.2,
-        release: 0.2,
-      },
-    }).toDestination();
-    
-    const melody = [
-      ['C4', '8n'], ['E4', '8n'], ['G4', '8n'], ['C5', '8n'],
-      ['G4', '8n'], ['E4', '8n'], ['C4', '8n'], null
-    ];
+  if (!soundContext) {
+    return null; // Or a loading/fallback state
+  }
 
-    sequence = new Tone.Sequence((time, note) => {
-      if (note) {
-        synth.triggerAttackRelease(note, '8n', time);
-      }
-    }, melody, '4n').start(0);
-
-    Tone.Transport.bpm.value = 120;
-
-    setIsInitialized(true);
-  }, [isInitialized]);
-
-  useEffect(() => {
-    return () => {
-      // Cleanup on component unmount
-      if (Tone.Transport.state === 'started') {
-        Tone.Transport.stop();
-      }
-      sequence?.dispose();
-      synth?.dispose();
-    };
-  }, []);
-
-  const toggleSound = async () => {
-    if (!isInitialized) {
-      await initializeAudio();
-    }
-    
-    if (Tone.Transport.state === 'started') {
-      Tone.Transport.pause();
-      setIsSoundOn(false);
-    } else {
-      Tone.Transport.start();
-      setIsSoundOn(true);
-    }
-  };
+  const { isSoundOn, toggleSound } = soundContext;
   
   return (
     <Button

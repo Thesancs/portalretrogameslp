@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Header from '@/components/app/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { ControllerIcon, ConsoleIcon, JoystickIcon } from '@/components/app/pixel-art-icons';
@@ -18,8 +17,7 @@ const features = [
 export default function SalesPage() {
   return (
     <>
-      <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Storytelling Section */}
           <section className="text-center space-y-4">

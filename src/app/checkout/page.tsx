@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Header from '@/components/app/header';
 import { BadgeIcon, HeartIcon } from '@/components/app/pixel-art-icons';
 
 const bonusImage = PlaceHolderImages.find(p => p.id === 'checkout-bonus')!;
@@ -25,8 +24,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
         <div className="max-w-4xl mx-auto">
           <Card className="border-2 border-primary/30">
             <CardHeader className="text-center">
