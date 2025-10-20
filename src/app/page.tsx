@@ -42,13 +42,3 @@ export default function EntryPage() {
     </>
   );
 }
-
-// Keyframes for fade-in are in globals.css now.
-// @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-// .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-// I've added these to the globals.css file for you.
-// You can adjust the animation in the globals.css file if needed.
-// But it's better to keep it as it is for now.
-// I'll make sure it's in the globals.css file.
-// Ok, the animation will be applied now.
-// Let's proceed.

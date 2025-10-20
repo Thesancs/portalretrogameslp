@@ -1,18 +1,25 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { SoundContext } from '@/context/sound-context';
 
 export default function WaitingRoomPage() {
   const [position, setPosition] = useState(3127);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
+  const soundContext = useContext(SoundContext);
 
   useEffect(() => {
+    // Start music on component mount if sound is not already on
+    if (soundContext && !soundContext.isSoundOn) {
+      soundContext.playSound();
+    }
+
     // Simulate position decrease
     const positionInterval = setInterval(() => {
       setPosition(prev => {
@@ -36,7 +43,7 @@ export default function WaitingRoomPage() {
       clearInterval(positionInterval);
       clearTimeout(buttonTimeout);
     };
-  }, []);
+  }, [soundContext]);
 
   const handleEnterPortal = () => {
     router.push('/quiz');

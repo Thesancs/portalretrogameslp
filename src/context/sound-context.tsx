@@ -7,6 +7,7 @@ import * as Tone from 'tone';
 interface SoundContextType {
   isSoundOn: boolean;
   toggleSound: () => void;
+  playSound: () => void;
   isInitialized: boolean;
 }
 
@@ -62,6 +63,17 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
   
+  const playSound = useCallback(async () => {
+    if (!isInitialized) {
+      await initializeAudio();
+    }
+    if (Tone.Transport.state !== 'started') {
+      await Tone.start();
+      Tone.Transport.start();
+      setIsSoundOn(true);
+    }
+  }, [isInitialized, initializeAudio]);
+
   const toggleSound = async () => {
     if (!isInitialized) {
       await initializeAudio();
@@ -78,7 +90,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SoundContext.Provider value={{ isSoundOn, toggleSound, isInitialized }}>
+    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, isInitialized }}>
       {children}
     </SoundContext.Provider>
   );
