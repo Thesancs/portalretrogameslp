@@ -74,7 +74,7 @@ export default function WaitingRoomPage() {
                   🟨 Você está na fila para acessar o Portal Gamer do Passado™
                 </p>
                 <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
-                    <span>🔄 Carregando...</span>
+                    <div className="loader"></div>
                     <span>Posição: <span className='text-primary text-glow'>{position}</span></span>
                 </div>
               </div>
