@@ -74,15 +74,15 @@ const SoundToggle = () => {
     <Button
       onClick={toggleSound}
       variant="ghost"
-      size="sm"
-      className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+      size="lg"
+      className="flex items-center gap-4 text-muted-foreground hover:text-foreground p-4 rounded-lg animate-glow"
     >
       {isSoundOn ? (
-        <SpeakerLoudIcon className="h-5 w-5" />
+        <SpeakerLoudIcon className="h-8 w-8 text-primary" />
       ) : (
-        <SpeakerOffIcon className="h-5 w-5" />
+        <SpeakerOffIcon className="h-8 w-8" />
       )}
-      <span className='font-body text-sm'>{isSoundOn ? 'Sound On' : 'Sound Off'}</span>
+      <span className='font-body text-lg'>{isSoundOn ? 'Sound On' : 'Sound Off'}</span>
     </Button>
   );
 };

@@ -149,4 +149,17 @@
       box-shadow: inset -6px -6px 0px 0px hsl(var(--foreground) / 0.2);
     }
   }
+
+  .animate-glow {
+    animation: glow 1.5s infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    to {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.7), 0 0 40px hsl(var(--primary) / 0.5);
+    }
+  }
 }
