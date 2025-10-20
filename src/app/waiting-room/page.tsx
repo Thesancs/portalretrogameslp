@@ -90,10 +90,11 @@ export default function WaitingRoomPage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
+                  className="w-full"
                 >
                   <Button
                     onClick={handleEnterPortal}
-                    className="btn-pixel-accent !text-lg !px-8 !py-5 animate-pulse-press"
+                    className="btn-pixel-accent text-base md:text-lg px-6 py-4 md:px-8 md:py-5 animate-pulse-press w-full"
                   >
                     👉 ENTRAR NO PORTAL
                   </Button>
