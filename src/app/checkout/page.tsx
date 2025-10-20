@@ -68,7 +68,7 @@ export default function CheckoutPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span>Acesso Vitalício - Retro Rewind</span>
-                    <span className="font-bold">R$97,00</span>
+                    <span className="font-bold">R$19,90</span>
                   </div>
                   <div className="flex justify-between items-center text-sm text-muted-foreground">
                     <span>Descontos</span>
@@ -77,7 +77,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="border-t pt-4 mt-4 flex justify-between items-center font-bold text-xl">
                   <span>Total</span>
-                  <span className="text-primary">R$97,00</span>
+                  <span className="text-primary">R$19,90</span>
                 </div>
                 
                 <div className="space-y-4 pt-4 border-t">

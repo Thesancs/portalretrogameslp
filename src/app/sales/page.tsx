@@ -67,7 +67,7 @@ export default function SalesPage() {
                 </div>
                 <div className="text-center space-y-4 pt-6">
                   <p className="text-2xl font-bold">Tudo isso por um pagamento único de</p>
-                  <p className="font-pixel text-6xl text-primary text-glow">R$97</p>
+                  <p className="font-pixel text-6xl text-primary text-glow">R$19,90</p>
                   <p className="text-muted-foreground">Por menos que um lanche, você revive uma vida inteira de memórias.</p>
                 </div>
                 <div className="text-center pt-4">
