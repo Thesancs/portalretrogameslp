@@ -61,16 +61,15 @@ export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
-  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
 
   const initializeQuizAudio = useCallback(async () => {
-    if (isAudioInitialized) return;
+    if (selectionSynth) return;
     
     // Tone.start might already be called by the global context
     if (soundContext && !soundContext.isInitialized) {
-      await Tone.start();
+      await soundContext.initializeAudio();
     }
     
     selectionSynth = new Tone.Synth({
@@ -85,14 +84,14 @@ export default function QuizPage() {
       },
     }).toDestination();
     
-    setIsAudioInitialized(true);
-  }, [isAudioInitialized, soundContext]);
+  }, [soundContext]);
 
   useEffect(() => {
     initializeQuizAudio();
 
     return () => {
       selectionSynth?.dispose();
+      selectionSynth = undefined!;
     };
   }, [initializeQuizAudio]);
 
@@ -121,7 +120,7 @@ export default function QuizPage() {
   const handleAnswerSelection = (value: string) => {
     if (animatingOption) return; // Prevent clicking while animating
     
-    if (soundContext?.isSoundOn && isAudioInitialized && selectionSynth) {
+    if (soundContext?.isSoundOn && selectionSynth) {
       selectionSynth.triggerAttackRelease('C5', '16n');
     }
 

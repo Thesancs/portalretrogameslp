@@ -9,6 +9,7 @@ interface SoundContextType {
   toggleSound: () => void;
   playSound: () => void;
   isInitialized: boolean;
+  initializeAudio: () => Promise<void>;
 }
 
 export const SoundContext = createContext<SoundContextType | undefined>(undefined);
@@ -51,6 +52,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     Tone.Transport.bpm.value = 120;
     
     setIsInitialized(true);
+    console.log("Audio Initialized");
   }, [isInitialized]);
 
   useEffect(() => {
@@ -68,7 +70,6 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
       await initializeAudio();
     }
     if (Tone.Transport.state !== 'started') {
-      await Tone.start();
       Tone.Transport.start();
       setIsSoundOn(true);
     }
@@ -90,7 +91,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, isInitialized }}>
+    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, isInitialized, initializeAudio }}>
       {children}
     </SoundContext.Provider>
   );

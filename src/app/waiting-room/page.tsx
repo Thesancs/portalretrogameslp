@@ -16,7 +16,7 @@ export default function WaitingRoomPage() {
 
   useEffect(() => {
     // Start music on component mount if sound is not already on
-    if (soundContext && !soundContext.isSoundOn) {
+    if (soundContext) {
       soundContext.playSound();
     }
 
