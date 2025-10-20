@@ -33,7 +33,7 @@ export default function EntryPage() {
           ))}
         </div>
 
-        <Link href="/waiting-room" className="btn-pixel-accent !text-xl !px-8 !py-4 animate-pulse-press">
+        <Link href="/waiting-room" className="btn-pixel !text-xl !px-8 !py-4 animate-pulse-press">
           Fazer o Quiz Nostálgico
         </Link>
       
