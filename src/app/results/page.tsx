@@ -13,7 +13,7 @@ export default function ResultsPage() {
         </div>
         
         <h2 
-            className="text-5xl md:text-7xl font-pixel uppercase text-glow text-primary"
+            className="text-4xl sm:text-5xl md:text-7xl font-pixel uppercase text-glow text-primary"
         >
             Memória Desbloqueada!
         </h2>
