@@ -2,26 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Card, CardContent } from '@/components/ui/card';
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { SpeakerLoudIcon } from '@/components/app/pixel-art-icons';
 import Header from '@/components/app/header';
 
 const entryImages = PlaceHolderImages.filter(p => p.id.startsWith('entry-'));
 
 export default function EntryPage() {
-  const [isSoundAlertOpen, setIsSoundAlertOpen] = useState(false);
-
-  useEffect(() => {
-    // Open the dialog automatically after a short delay
-    const timer = setTimeout(() => {
-      setIsSoundAlertOpen(true);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
-
 
   return (
     <>
@@ -55,25 +41,6 @@ export default function EntryPage() {
           </Link>
         
       </main>
-
-      <AlertDialog open={isSoundAlertOpen} onOpenChange={setIsSoundAlertOpen}>
-        <AlertDialogContent className="max-w-sm text-center">
-          <AlertDialogHeader>
-            <div className="mx-auto mb-4">
-              <SpeakerLoudIcon className="h-16 w-16 text-primary" />
-            </div>
-            <AlertDialogTitle className="text-2xl font-headline">Ative o som para uma melhor imersão!</AlertDialogTitle>
-            <AlertDialogDescription>
-              Recomendamos ativar o som para uma experiência nostálgica completa.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="sm:justify-center">
-            <AlertDialogAction onClick={() => setIsSoundAlertOpen(false)} className="btn-pixel">
-              Entendido!
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }
