@@ -99,6 +99,11 @@
     box-shadow: inset -6px -6px 0px 0px hsl(var(--foreground) / 0.2);
     outline-color: hsl(var(--primary-foreground));
   }
+  .btn-pixel:active {
+    transform: translate(0px, 0px);
+    box-shadow: inset -2px -2px 0px 0px hsl(var(--foreground) / 0.2);
+  }
+
   .btn-pixel-accent {
      @apply relative inline-block px-5 py-3 font-pixel text-base text-accent-foreground bg-accent uppercase tracking-wider;
      box-shadow: inset -4px -4px 0px 0px hsl(var(--foreground) / 0.2);
@@ -109,6 +114,10 @@
     transform: translate(3px, 3px);
     box-shadow: inset -6px -6px 0px 0px hsl(var(--foreground) / 0.2);
     outline-color: hsl(var(--accent-foreground));
+  }
+  .btn-pixel-accent:active {
+    transform: translate(0px, 0px);
+    box-shadow: inset -2px -2px 0px 0px hsl(var(--foreground) / 0.2);
   }
 
   .animate-flash-red {
