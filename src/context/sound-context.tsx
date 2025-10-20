@@ -28,37 +28,55 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     
     synth = new Tone.PolySynth(Tone.Synth, {
       oscillator: {
-        type: 'square8',
+        type: 'sine',
       },
       envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.2,
-        release: 0.2,
+        attack: 0.1,
+        decay: 0.5,
+        sustain: 0.4,
+        release: 1,
       },
+      volume: -6,
     }).toDestination();
+
+    // Reverb for a more "watery" feel
+    const reverb = new Tone.Reverb({
+      decay: 4,
+      wet: 0.4,
+    }).toDestination();
+    synth.connect(reverb);
     
+    // Melody inspired by Dire, Dire Docks
     const melody = [
-      ['C4', '8n'], ['E4', '8n'], ['G4', '8n'], ['C5', '8n'],
-      ['G4', '8n'], ['E4', '8n'], ['C4', '8n'], null
+      { time: '0:0', note: 'C4', duration: '2n' },
+      { time: '0:2', note: 'G4', duration: '4n' },
+      { time: '0:3', note: 'E4', duration: '4n' },
+      { time: '1:0', note: 'F4', duration: '2n' },
+      { time: '1:2', note: 'C5', duration: '4n' },
+      { time: '1:3', note: 'A4', duration: '4n' },
+      { time: '2:0', note: 'G4', duration: '1n' },
+      { time: '3:0', note: 'E4', duration: '2n' },
+      { time: '3:2', note: 'C4', duration: '2n' },
     ];
 
-    sequence = new Tone.Sequence((time, note) => {
-      if (note) {
-        synth.triggerAttackRelease(note, '8n', time);
-      }
-    }, melody, '4n').start(0);
+    sequence = new Tone.Part((time, value) => {
+      synth.triggerAttackRelease(value.note, value.duration, time);
+    }, melody).start(0);
+    sequence.loop = true;
+    sequence.loopEnd = '4m';
 
-    Tone.Transport.bpm.value = 120;
+
+    Tone.Transport.bpm.value = 75;
     
     setIsInitialized(true);
-    console.log("Audio Initialized");
+    console.log("Audio Initialized with Dire Docks theme");
   }, [isInitialized]);
 
   useEffect(() => {
     return () => {
       if (Tone.Transport.state === 'started') {
         Tone.Transport.stop();
+        Tone.Transport.cancel();
       }
       sequence?.dispose();
       synth?.dispose();
