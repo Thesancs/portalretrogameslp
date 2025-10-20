@@ -15,33 +15,30 @@ export default function WaitingRoomPage() {
   const soundContext = useContext(SoundContext);
 
   useEffect(() => {
-    // Start music on component mount if sound is not already on
     if (soundContext && !soundContext.isSoundOn) {
       soundContext.playSound();
     }
 
-    // Simulate position decrease
+    const startValue = 3127;
+    const duration = 5000; // 5 seconds
+    const intervalTime = 50; // update every 50ms
+    const steps = duration / intervalTime;
+    const decrement = startValue / steps;
+
     const positionInterval = setInterval(() => {
       setPosition(prev => {
-        const decrease = Math.floor(Math.random() * 50) + 20;
-        const newPosition = prev - decrease;
+        const newPosition = prev - decrement;
         if (newPosition <= 0) {
           clearInterval(positionInterval);
+          setShowButton(true);
           return 0;
         }
-        return newPosition;
+        return Math.floor(newPosition);
       });
-    }, 3000); // Updates every 3 seconds
+    }, intervalTime);
 
-    // Show button after 10 seconds
-    const buttonTimeout = setTimeout(() => {
-      setShowButton(true);
-    }, 10000);
-    
-    // Cleanup intervals and timeouts on component unmount
     return () => {
       clearInterval(positionInterval);
-      clearTimeout(buttonTimeout);
     };
   }, [soundContext]);
 
