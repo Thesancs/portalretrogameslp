@@ -1,8 +1,10 @@
+
 'use client';
 
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button';
-import { SpeakerLoudIcon, SpeakerOffIcon, MoveRightIcon } from 'lucide-react';
+import { MoveRightIcon } from 'lucide-react';
+import { SpeakerLoudIcon, SpeakerOffIcon } from '@/components/app/pixel-art-icons';
 import { SoundContext } from '@/context/sound-context';
 import { usePathname } from 'next/navigation';
 
@@ -10,9 +12,33 @@ const SoundToggle = () => {
   const soundContext = useContext(SoundContext);
   const pathname = usePathname();
 
-  if (!soundContext || pathname !== '/') {
-    return null; // Only show on the homepage
+  if (!soundContext) {
+    return null;
   }
+  
+  // Only show on the homepage, or when music is already playing on other pages
+  if (pathname !== '/' && !soundContext.isSoundOn) {
+    return null;
+  }
+  
+  if (pathname !== '/') {
+      return (
+         <Button
+            onClick={soundContext.toggleSound}
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground hover:text-foreground"
+          >
+            {soundContext.isSoundOn ? (
+              <SpeakerLoudIcon className="h-6 w-6 text-primary" />
+            ) : (
+              <SpeakerOffIcon className="h-6 w-6" />
+            )}
+            <span className='sr-only'>Toggle Sound</span>
+          </Button>
+      )
+  }
+
 
   const { isSoundOn, toggleSound } = soundContext;
   
@@ -33,7 +59,7 @@ const SoundToggle = () => {
         ) : (
           <SpeakerOffIcon className="h-8 w-8" />
         )}
-        <span className='font-body text-lg'>Ligar Som</span>
+        <span className='font-body text-lg'>{isSoundOn ? 'Desligar Som' : 'Ligar Som'}</span>
       </Button>
     </div>
   );
