@@ -23,8 +23,8 @@ export default function CheckoutPage() {
   };
 
   return (
-    <>
-      <main className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
+    
+      <div className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
         <div className="max-w-4xl mx-auto">
           <Card className="border-2 border-primary/30">
             <CardHeader className="text-center">
@@ -106,7 +106,7 @@ export default function CheckoutPage() {
             </div>
           </Card>
         </div>
-      </main>
-    </>
+      </div>
+    
   );
 }

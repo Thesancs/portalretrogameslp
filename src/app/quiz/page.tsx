@@ -146,8 +146,8 @@ export default function QuizPage() {
   const progressPercentage = ((step + 1) / quizSteps.length) * 100;
 
   return (
-    <>
-    <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
+    
+    <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
       <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption })}>
         <CardHeader className="text-center">
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>
@@ -266,7 +266,7 @@ export default function QuizPage() {
           </div>
         </CardFooter>
       </Card>
-      </main>
-    </>
+      </div>
+    
   );
 }

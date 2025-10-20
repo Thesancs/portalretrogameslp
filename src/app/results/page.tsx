@@ -3,8 +3,8 @@ import { CheckCircle } from 'lucide-react';
 
 export default function ResultsPage() {
   return (
-    <>
-    <main className="container mx-auto px-4 py-8 flex-grow flex items-center min-h-[calc(100vh-128px)]">
+    
+    <div className="container mx-auto px-4 py-8 flex-grow flex items-center min-h-[calc(100vh-128px)]">
       <div className="text-center w-full max-w-3xl mx-auto space-y-8">
         <div className="relative inline-block">
             <CheckCircle className="h-24 w-24 text-accent animate-pulse" />
@@ -30,7 +30,7 @@ export default function ResultsPage() {
             Ver Plataforma Agora
         </Link>
       </div>
-    </main>
-    </>
+    </div>
+    
   );
 }

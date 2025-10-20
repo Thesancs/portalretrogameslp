@@ -16,8 +16,8 @@ const features = [
 
 export default function SalesPage() {
   return (
-    <>
-      <main className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
+    
+      <div className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Storytelling Section */}
           <section className="text-center space-y-4">
@@ -77,7 +77,7 @@ export default function SalesPage() {
             </Card>
           </section>
         </div>
-      </main>
-    </>
+      </div>
+    
   );
 }

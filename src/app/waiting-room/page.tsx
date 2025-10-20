@@ -16,7 +16,7 @@ export default function WaitingRoomPage() {
 
   useEffect(() => {
     // Start music on component mount if sound is not already on
-    if (soundContext) {
+    if (soundContext && !soundContext.isSoundOn) {
       soundContext.playSound();
     }
 
@@ -50,7 +50,7 @@ export default function WaitingRoomPage() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
+    <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
       <Card className="w-full max-w-2xl text-center shadow-2xl border-primary/20 bg-card/80 backdrop-blur-sm">
         <CardContent className="p-6 md:p-8 space-y-6">
           <AnimatePresence>
@@ -106,6 +106,6 @@ export default function WaitingRoomPage() {
           </div>
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }

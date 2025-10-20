@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/app/header';
 import { SoundProvider } from '@/context/sound-context';
+import AudioPlayer from '@/components/app/audio-player';
 
 export const metadata: Metadata = {
   title: 'Portal Retro Games',
@@ -25,7 +26,8 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <SoundProvider>
           <Header />
-          {children}
+          <main>{children}</main>
+          <AudioPlayer />
         </SoundProvider>
         <Toaster />
       </body>

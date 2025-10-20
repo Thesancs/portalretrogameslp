@@ -9,36 +9,34 @@ const entryImages = PlaceHolderImages.filter(p => p.id.startsWith('entry-'));
 export default function EntryPage() {
 
   return (
-    <>
-      <main className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-center">
-        
-          <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">
-            SE VOCÊ LEMBRA DESSES JOGOS, PREPARE-SE...
-          </h1>
-          <p className="text-lg text-muted-foreground mb-8">
-            Sua jornada pela nostalgia está prestes a começar.
-          </p>
+    <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-128px)] text-center">
+      
+        <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">
+          SE VOCÊ LEMBRA DESSES JOGOS, PREPARE-SE...
+        </h1>
+        <p className="text-lg text-muted-foreground mb-8">
+          Sua jornada pela nostalgia está prestes a começar.
+        </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 w-full max-w-4xl">
-            {entryImages.map((img, index) => (
-              <div key={img.id} className="overflow-hidden rounded-lg border-2 border-secondary hover:border-primary transition-all duration-300 shadow-lg animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
-                <Image
-                  src={img.imageUrl}
-                  alt={img.description}
-                  data-ai-hint={img.imageHint}
-                  width={250}
-                  height={180}
-                  className="w-full h-full object-cover aspect-[4/3]"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 w-full max-w-4xl">
+          {entryImages.map((img, index) => (
+            <div key={img.id} className="overflow-hidden rounded-lg border-2 border-secondary hover:border-primary transition-all duration-300 shadow-lg animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+              <Image
+                src={img.imageUrl}
+                alt={img.description}
+                data-ai-hint={img.imageHint}
+                width={250}
+                height={180}
+                className="w-full h-full object-cover aspect-[4/3]"
+              />
+            </div>
+          ))}
+        </div>
 
-          <Link href="/waiting-room" className="btn-pixel !text-xl !px-8 !py-4 animate-pulse-press">
-            Fazer o Quiz Nostálgico
-          </Link>
-        
-      </main>
-    </>
+        <Link href="/waiting-room" className="btn-pixel !text-xl !px-8 !py-4 animate-pulse-press">
+          Fazer o Quiz Nostálgico
+        </Link>
+      
+    </div>
   );
 }
