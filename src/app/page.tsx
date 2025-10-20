@@ -9,7 +9,7 @@ const entryImages = PlaceHolderImages.filter(p => p.id.startsWith('entry-'));
 export default function EntryPage() {
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-128px)] text-center">
+    <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-256px)] text-center">
       
         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">
           SE VOCÊ LEMBRA DESSES JOGOS, PREPARE-SE...

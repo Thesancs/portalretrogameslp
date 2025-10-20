@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import SoundToggle from './sound-toggle';
 
 export default function Header() {
   return (
@@ -10,9 +9,6 @@ export default function Header() {
             Portal Retro Games
           </h1>
         </Link>
-        <div className="mt-2 flex justify-center">
-          <SoundToggle />
-        </div>
       </div>
     </header>
   );
