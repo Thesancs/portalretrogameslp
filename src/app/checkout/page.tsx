@@ -67,7 +67,7 @@ export default function CheckoutPage() {
                 <h3 className="text-xl font-semibold">Resumo do Pedido</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span>Acesso Vitalício - Retro Rewind</span>
+                    <span>Acesso Vitalício - Portal Retro Games</span>
                     <span className="font-bold">R$19,90</span>
                   </div>
                   <div className="flex justify-between items-center text-sm text-muted-foreground">

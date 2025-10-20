@@ -6,7 +6,7 @@ export default function Header() {
       <div className="container mx-auto text-center">
         <Link href="/">
           <h1 className="text-2xl md:text-3xl font-pixel text-primary uppercase text-glow">
-            Retro Rewind Funnel
+            Portal Retro Games
           </h1>
         </Link>
       </div>

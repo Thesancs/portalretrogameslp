@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/app/header';
 
 export const metadata: Metadata = {
-  title: 'Retro Rewind Funnel',
+  title: 'Portal Retro Games',
   description: 'Reviva a Era Gamer',
 };
 
