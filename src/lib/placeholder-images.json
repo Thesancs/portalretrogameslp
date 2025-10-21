@@ -3,7 +3,7 @@
     {
       "id": "quiz-game-scene",
       "description": "A scene from a classic retro video game.",
-      "imageUrl": "https://i.postimg.cc/vBv33PPQ/23a4a2253cd8f711c02ac213b59953c4.gif",
+      "imageUrl": "/sound/images/gif-pokemon.gif",
       "imageHint": "retro game gif"
     },
     {
@@ -39,7 +39,7 @@
     {
       "id": "entry-image-2",
       "description": "The original PlayStation console menu screen",
-      "imageUrl": "https://images.unsplash.com/photo-1573788708917-3d447b0d6271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwbGF5c3RhdGlvbiUyMG1lbnV8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1573788708917-3d447b0d6271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwbGF5c3RhdGlvbiUyMG1lbnV8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib_rb-4.1.0&q=80&w=1080",
       "imageHint": "playstation menu"
     },
     {
