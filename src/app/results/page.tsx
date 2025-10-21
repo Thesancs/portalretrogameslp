@@ -73,12 +73,7 @@ function ResultsContent() {
             </p>
         </div>
         
-        <Link href="/sales" className="btn-pixel-accent !text-lg !px-8 !py-4">
-            Ver Plataforma Agora
-        </Link>
-      </div>
-      
-       {/* Testimonials Section */}
+         {/* Testimonials Section */}
        <section className="w-full max-w-4xl mx-auto pt-16 text-center">
             <h3 className="text-3xl font-headline mb-8">O que outros players estão dizendo:</h3>
             <Carousel
@@ -118,6 +113,13 @@ function ResultsContent() {
                 <CarouselNext className="mr-12" />
             </Carousel>
         </section>
+
+        <Link href="/sales" className="btn-pixel-accent !text-lg !px-8 !py-4">
+            Ver Plataforma Agora
+        </Link>
+      </div>
+      
+      
 
     </div>
   );
