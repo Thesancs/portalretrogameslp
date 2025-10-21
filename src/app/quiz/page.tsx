@@ -60,6 +60,7 @@ let selectionSynth: Tone.Synth;
 export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
+  const [score, setScore] = useState(0);
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
@@ -99,7 +100,7 @@ export default function QuizPage() {
     if (step < quizSteps.length - 1) {
       setStep(step + 1);
     } else {
-      router.push('/results');
+      router.push(`/results?score=${score}`);
     }
      setAnimatingOption(null);
   };
@@ -120,6 +121,10 @@ export default function QuizPage() {
   const handleAnswerSelection = (value: string) => {
     if (animatingOption) return; // Prevent clicking while animating
     
+    if (answers[step] === '') {
+        setScore(prevScore => prevScore + 10);
+    }
+
     if (soundContext?.isSoundOn && selectionSynth) {
       selectionSynth.triggerAttackRelease('C5', '16n');
     }
