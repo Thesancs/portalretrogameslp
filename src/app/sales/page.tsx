@@ -61,8 +61,8 @@ export default function SalesPage() {
                                 <Image 
                                   src={icon.src}
                                   alt={icon.alt}
-                                  width={100}
-                                  height={100}
+                                  width={120}
+                                  height={120}
                                   className="object-contain"
                                 />
                             </div>
