@@ -239,7 +239,7 @@ export default function QuizPage() {
                             data-ai-hint={opt.image.imageHint}
                             width={200}
                             height={150}
-                            className="rounded-md object-cover aspect-[4/3] mb-2"
+                            className="rounded-md object-contain aspect-[4/3] mb-2"
                           />
                         )}
                         <span className="font-semibold">{opt.label}</span>
