@@ -62,16 +62,16 @@ export default function SalesPage() {
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Storytelling Section */}
           <section className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline">
               Você lembra do barulho do controle, do cheiro da locadora, da emoção de zerar um jogo sem salvar?
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-base sm:text-lg text-muted-foreground">
               Essa era não acabou. Ela apenas estava esperando por você.
             </p>
           </section>
 
           {/* Gameplay Gallery */}
-           <section className="w-full max-w-4xl mx-auto py-8">
+           <section className="w-full max-w-4xl mx-auto py-4">
             <Carousel
                 plugins={[autoplayPlugin.current]}
                 opts={{
@@ -87,9 +87,9 @@ export default function SalesPage() {
                                 <Image 
                                   src={icon.src}
                                   alt={icon.alt}
-                                  width={600}
-                                  height={600}
-                                  className="object-contain border-2 border-primary rounded-md"
+                                  width={100}
+                                  height={100}
+                                  className="object-contain border-2 border-primary rounded-md aspect-square"
                                 />
                             </div>
                         </CarouselItem>
@@ -100,14 +100,14 @@ export default function SalesPage() {
 
            {/* Console List Section */}
           <section className="text-center space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline uppercase">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline uppercase">
               Você terá acesso a <span className="text-primary text-glow">Jogos de:</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 max-w-2xl mx-auto text-left">
               {consoleList.map((consoleName) => (
                 <div key={consoleName} className="flex items-center gap-3">
                   <CheckCircle className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-xl font-semibold">{consoleName}</span>
+                  <span className="text-lg sm:text-xl font-semibold">{consoleName}</span>
                 </div>
               ))}
             </div>
@@ -115,36 +115,36 @@ export default function SalesPage() {
 
           {/* Offer Section */}
           <section>
-            <Card className="shadow-2xl border-4 border-primary/50">
-              <CardHeader className="text-center">
+            <Card className="shadow-2xl border-2 sm:border-4 border-primary/50">
+              <CardHeader className="text-center px-4 sm:px-6">
                 <p className="font-pixel text-accent">A OFERTA DEFINITIVA</p>
-                <CardTitle className="text-4xl font-headline">Acesso Imediato à Nostalgia</CardTitle>
+                <CardTitle className="text-3xl sm:text-4xl font-headline">Acesso Imediato à Nostalgia</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
+              <CardContent className="space-y-8 px-4 sm:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base sm:text-lg">
                   {features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-4 p-3 bg-muted/50 rounded-md">
-                      <feature.icon className="h-8 w-8 text-primary" />
+                    <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-md">
+                      <feature.icon className="h-6 w-6 sm:h-8 sm:w-8 text-primary flex-shrink-0" />
                       <span className="font-medium">{feature.text}</span>
                     </div>
                   ))}
                 </div>
                 <div className="text-center space-y-4 pt-6">
-                  <p className="text-2xl font-bold">Tudo isso de <span className="line-through text-muted-foreground">R$127,90</span> por um pagamento único de</p>
-                  <p className="font-pixel text-5xl md:text-6xl text-primary text-glow">R$19,90</p>
-                  <p className="text-muted-foreground">Por menos que um lanche, você revive uma vida inteira de memórias.</p>
+                  <p className="text-xl sm:text-2xl font-bold">Tudo isso de <span className="line-through text-muted-foreground">R$127,90</span> por um pagamento único de</p>
+                  <p className="font-pixel text-4xl sm:text-5xl md:text-6xl text-primary text-glow">R$19,90</p>
+                  <p className="text-sm sm:text-base text-muted-foreground">Por menos que um lanche, você revive uma vida inteira de memórias.</p>
                   <div className="flex justify-center pt-4">
                     <Image
                       src="/image/icons/cartoes.png"
                       alt="Métodos de pagamento"
-                      width={300}
-                      height={50}
+                      width={250}
+                      height={42}
                       className="object-contain"
                     />
                   </div>
                 </div>
                 <div className="text-center pt-4">
-                  <Link href="/checkout" className="btn-pixel !text-xl !px-10 !py-5">
+                  <Link href="/checkout" className="btn-pixel !text-lg sm:!text-xl !px-8 sm:!px-10 !py-4 sm:!py-5">
                     Quero Reviver Agora
                   </Link>
                 </div>
