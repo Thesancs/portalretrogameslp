@@ -6,12 +6,19 @@ import { SoundContext } from '@/context/sound-context';
 
 export default function AudioPlayer() {
     const soundContext = useContext(SoundContext);
-    if (!soundContext) return null;
+    if (!soundContext || !soundContext.audioRefs) return null;
     
     return (
-        <audio ref={soundContext.audioRef} loop>
-          <source src="/sound/Super Mario 64 Remastered - Dire, Dire Docks - Church of Kondo (youtube).mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
+        <>
+            <audio ref={soundContext.audioRefs.background} loop>
+              <source src="/sound/Super Mario 64 Remastered - Dire, Dire Docks - Church of Kondo (youtube).mp3" type="audio/mpeg" />
+            </audio>
+            <audio ref={soundContext.audioRefs.waiting} loop>
+              <source src="/sounds/sound_.mp3" type="audio/mpeg" />
+            </audio>
+            <audio ref={soundContext.audioRefs.coin}>
+              <source src="/sounds/mario-coin.mp3" type="audio/mpeg" />
+            </audio>
+        </>
     );
 }

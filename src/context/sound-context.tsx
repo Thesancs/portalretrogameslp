@@ -2,15 +2,18 @@
 'use client';
 
 import { createContext, useState, useCallback, ReactNode, useRef, RefObject } from 'react';
+import * as Tone from 'tone';
+
+type SoundType = 'background' | 'waiting' | 'coin';
 
 interface SoundContextType {
   isSoundOn: boolean;
-  toggleSound: () => void;
-  playSound: () => void;
-  stopSound: () => void;
+  toggleSound: (soundType?: SoundType) => void;
+  playSound: (soundType: SoundType) => void;
+  stopSound: (soundType?: SoundType) => void;
   isInitialized: boolean;
   initializeAudio: () => Promise<void>;
-  audioRef: RefObject<HTMLAudioElement> | null;
+  audioRefs: { [key in SoundType]?: RefObject<HTMLAudioElement> };
 }
 
 export const SoundContext = createContext<SoundContextType | undefined>(undefined);
@@ -18,57 +21,94 @@ export const SoundContext = createContext<SoundContextType | undefined>(undefine
 export const SoundProvider = ({ children }: { children: ReactNode }) => {
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  
+  const audioRefs = {
+    background: useRef<HTMLAudioElement>(null),
+    waiting: useRef<HTMLAudioElement>(null),
+    coin: useRef<HTMLAudioElement>(null),
+  };
 
   const initializeAudio = useCallback(async () => {
     if (isInitialized) return;
-    try {
-        if (audioRef.current) {
-            await audioRef.current.play();
-            audioRef.current.pause();
-            audioRef.current.volume = 0.3;
-        }
-        setIsInitialized(true);
-    } catch (e) {
-        // Autoplay was prevented.
-        console.log("Audio initialization requires user interaction.");
-    }
-  }, [isInitialized]);
+    await Tone.start();
+    
+    // Set volumes
+    if(audioRefs.background.current) audioRefs.background.current.volume = 0.3;
+    if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
+    if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
 
-  const playSound = useCallback(async () => {
-    if (!audioRef.current) return;
+    setIsInitialized(true);
+  }, [isInitialized, audioRefs.background, audioRefs.waiting, audioRefs.coin]);
+
+
+  const playSound = useCallback(async (soundType: SoundType) => {
+    if (!isInitialized) await initializeAudio();
+    
+    const audioRef = audioRefs[soundType];
+
+    if (!audioRef?.current) return;
     try {
+        if(soundType !== 'coin') {
+            // Stop other looping sounds
+            for (const key in audioRefs) {
+                const otherRef = audioRefs[key as SoundType];
+                if (otherRef?.current && !otherRef.current.paused && key !== soundType) {
+                    otherRef.current.pause();
+                    otherRef.current.currentTime = 0;
+                }
+            }
+        }
+        audioRef.current.currentTime = 0;
         await audioRef.current.play();
         setIsSoundOn(true);
     } catch (error) {
-        console.error("Audio play failed:", error);
+        console.error(`Audio play failed for ${soundType}:`, error);
+        if(soundType !== 'coin') setIsSoundOn(false);
+    }
+  }, [isInitialized, initializeAudio, audioRefs]);
+
+  const stopSound = useCallback((soundType?: SoundType) => {
+    const stop = (ref: RefObject<HTMLAudioElement> | null) => {
+        if (ref?.current) {
+            ref.current.pause();
+            ref.current.currentTime = 0;
+        }
+    }
+
+    if (soundType) {
+        stop(audioRefs[soundType]);
+    } else { // Stop all sounds
+        for (const key in audioRefs) {
+            stop(audioRefs[key as SoundType]);
+        }
+    }
+    
+    // If we stop all sounds or the main background, set sound to off
+    if(!soundType || soundType !== 'coin') {
         setIsSoundOn(false);
     }
-  }, []);
 
-  const stopSound = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setIsSoundOn(false);
-    }
-  }, []);
+  }, [audioRefs]);
 
-  const toggleSound = useCallback(async () => {
+  const toggleSound = useCallback(async (soundType: SoundType = 'background') => {
     if (!isInitialized) {
       await initializeAudio();
     }
     
-    if (audioRef.current) {
-        if (audioRef.current.paused) {
-            await playSound();
-        } else {
+    const audioRef = audioRefs[soundType];
+    if (audioRef?.current) {
+        const isAnyLoopingSoundOn = audioRefs.background.current?.paused === false || audioRefs.waiting.current?.paused === false;
+
+        if (isAnyLoopingSoundOn) {
             stopSound();
+        } else {
+            await playSound(soundType);
         }
     }
-  }, [isInitialized, initializeAudio, playSound, stopSound]);
+  }, [isInitialized, initializeAudio, playSound, stopSound, audioRefs]);
   
   return (
-    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, stopSound, isInitialized, initializeAudio, audioRef }}>
+    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, stopSound, isInitialized, initializeAudio, audioRefs }}>
       {children}
     </SoundContext.Provider>
   );

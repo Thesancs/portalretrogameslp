@@ -19,8 +19,11 @@ export default function WaitingRoomPage() {
   const soundContext = useContext(SoundContext);
 
   useEffect(() => {
-    if (soundContext && !soundContext.isSoundOn) {
-      soundContext.toggleSound();
+    if (soundContext) {
+      soundContext.playSound('waiting');
+    }
+    return () => {
+      soundContext?.stopSound('waiting');
     }
   }, [soundContext]);
 

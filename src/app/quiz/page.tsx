@@ -13,7 +13,6 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import * as Tone from 'tone';
 import { SoundContext } from '@/context/sound-context';
 import { Home, Users, Video } from 'lucide-react';
 
@@ -85,8 +84,6 @@ const quizSteps = [
   }
 ];
 
-let selectionSynth: Tone.Synth;
-
 export default function QuizPage() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
@@ -95,38 +92,10 @@ export default function QuizPage() {
   const [isBonusModalOpen, setIsBonusModalOpen] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
-  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
   useEffect(() => {
-    const initializeQuizAudio = async () => {
-        if (isAudioInitialized || !soundContext) return;
-        
-        await soundContext.initializeAudio();
-        
-        if (Tone.context.state !== 'running') {
-            await Tone.start();
-        }
-
-        selectionSynth = new Tone.Synth({
-          oscillator: {
-            type: 'sine',
-          },
-          envelope: {
-            attack: 0.01,
-            decay: 0.2,
-            sustain: 0.1,
-            release: 0.2,
-          },
-        }).toDestination();
-        setIsAudioInitialized(true);
-    };
-
-    initializeQuizAudio();
-
-    return () => {
-      selectionSynth?.dispose();
-    };
-  }, [soundContext, isAudioInitialized]);
+    soundContext?.initializeAudio();
+  }, [soundContext]);
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
@@ -161,14 +130,7 @@ export default function QuizPage() {
     if (answers[step] === '') {
         const randomPoints = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
         setScore(prevScore => prevScore + randomPoints);
-    }
-
-    if (soundContext?.isSoundOn && selectionSynth) {
-      try {
-        selectionSynth.triggerAttackRelease('C5', '16n');
-      } catch (error) {
-        console.error("Synth trigger failed:", error);
-      }
+        soundContext?.playSound('coin');
     }
 
     setAnswer(step, value);
@@ -292,15 +254,17 @@ export default function QuizPage() {
                             key={optionLabel} 
                             htmlFor={optionLabel} 
                             className={cn(
-                               "btn-pixel !font-body !text-lg !font-bold !normal-case tracking-normal !flex-col !h-24",
+                               "btn-pixel !font-body !text-lg !font-bold !normal-case tracking-normal !flex !items-center !justify-center !h-24",
                                {
                                    "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === optionLabel
                                }
                             )}
                            >
                              <RadioGroupItem value={optionLabel} id={optionLabel} className="sr-only" onClick={() => handleAnswerSelection(optionLabel)} />
-                             {Icon && <Icon className="h-6 w-6 mb-2" />}
-                             <span className="text-center">{optionLabel}</span>
+                              <div className="flex flex-col items-center justify-center">
+                                {Icon && <Icon className="h-6 w-6 mb-2" />}
+                                <span className="text-center">{optionLabel}</span>
+                              </div>
                            </Label>
                         )
                     })}
@@ -342,6 +306,3 @@ export default function QuizPage() {
     
   );
 }
-
-    
-    
