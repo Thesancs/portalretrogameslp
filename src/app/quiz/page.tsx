@@ -292,7 +292,7 @@ export default function QuizPage() {
                             key={optionLabel} 
                             htmlFor={optionLabel} 
                             className={cn(
-                               "btn-pixel !font-body !text-sm !font-normal !normal-case tracking-normal text-center justify-center !flex-col !h-24",
+                               "btn-pixel !font-body !text-sm !font-normal !normal-case tracking-normal text-center justify-center items-center !flex-col !h-24",
                                {
                                    "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === optionLabel
                                }
