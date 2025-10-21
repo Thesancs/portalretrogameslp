@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/app/header';
 import { SoundProvider } from '@/context/sound-context';
 import AudioPlayer from '@/components/app/audio-player';
-import SoundToggle from '@/components/app/sound-toggle';
 
 export const metadata: Metadata = {
   title: 'Portal Retro Games',
@@ -30,10 +29,7 @@ export default function RootLayout({
           <div className="bg-primary text-primary-foreground font-pixel text-center py-2 text-sm w-full z-40 animate-pulse">
             APROVEITE AGORA NOSSO DESCONTO DE BLACK FRIDAY
           </div>
-          <div className="pt-8 pb-4 text-center">
-             <SoundToggle />
-          </div>
-          <main className="pt-4">{children}</main>
+          <main>{children}</main>
           <AudioPlayer />
         </SoundProvider>
         <Toaster />

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import SoundToggle from '@/components/app/sound-toggle';
 
 const entryImages = PlaceHolderImages.filter(p => p.id.startsWith('entry-'));
 
@@ -11,6 +12,10 @@ export default function EntryPage() {
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-256px)] text-center">
       
+        <div className="pb-8 text-center">
+          <SoundToggle />
+        </div>
+
         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4 text-glow uppercase">
           SE VOCÊ LEMBRA DESSES JOGOS, PREPARE-SE...
         </h1>
