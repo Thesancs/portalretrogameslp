@@ -2,6 +2,7 @@
 'use client';
 
 import { createContext, useState, useCallback, ReactNode, useRef, RefObject, useEffect } from 'react';
+import * as Tone from 'tone';
 
 type SoundType = 'background' | 'waiting' | 'coin';
 
@@ -31,7 +32,6 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     if (typeof window === 'undefined' || isInitialized) return;
 
     try {
-        const Tone = (await import('tone')).default;
         await Tone.start();
         
         // Set volumes

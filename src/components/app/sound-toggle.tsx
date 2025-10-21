@@ -58,7 +58,7 @@ const SoundToggle = () => {
         ) : (
           <SpeakerOffIcon className="h-8 w-8" />
         )}
-        <span className='font-body text-lg'>{isSoundOn ? 'Desligar Som' : 'Ligar Som'}</span>
+        <span className='font-body text-lg'>{isSoundOn ? 'Som Ligado' : 'Ligar Som'}</span>
       </Button>
       <div className="flex flex-col items-center gap-2 text-muted-foreground">
         <MoveDownIcon className="h-5 w-5 animate-pulse" />
