@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Check, CheckCircle } from 'lucide-react';
 import { ControllerIcon, ConsoleIcon, JoystickIcon } from '@/components/app/pixel-art-icons';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
@@ -27,6 +27,25 @@ const features = [
   { text: "Compatível com PC, TV, e mais", icon: Check },
 ];
 
+const consoleList = [
+    "Playstation 1",
+    "Playstation 2",
+    "Playstation 3",
+    "PSP",
+    "Super Nintendo",
+    "Nintendo 64",
+    "Nintendo Wii",
+    "Nintendo 3DS",
+    "Atari",
+    "Mega Drive",
+    "Master System",
+    "GameBoy",
+    "Dreamcast",
+    "Sega Saturn",
+    "Arcade",
+    "Fliperamas e Muito mais..."
+];
+
 export default function SalesPage() {
   const autoplayPlugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
@@ -45,7 +64,7 @@ export default function SalesPage() {
           </section>
 
           {/* Gameplay Gallery */}
-          <section className="w-full max-w-4xl mx-auto py-8">
+           <section className="w-full max-w-4xl mx-auto py-8">
             <Carousel
                 plugins={[autoplayPlugin.current]}
                 opts={{
@@ -61,8 +80,8 @@ export default function SalesPage() {
                                 <Image 
                                   src={icon.src}
                                   alt={icon.alt}
-                                  width={120}
-                                  height={120}
+                                  width={600}
+                                  height={600}
                                   className="object-contain border-2 border-primary rounded-md"
                                 />
                             </div>
@@ -70,6 +89,21 @@ export default function SalesPage() {
                     ))}
                 </CarouselContent>
             </Carousel>
+          </section>
+
+           {/* Console List Section */}
+          <section className="text-center space-y-8">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline uppercase">
+              Você terá acesso a <span className="text-primary text-glow">Jogos de:</span>
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 max-w-2xl mx-auto text-left">
+              {consoleList.map((consoleName) => (
+                <div key={consoleName} className="flex items-center gap-3">
+                  <CheckCircle className="h-6 w-6 text-accent flex-shrink-0" />
+                  <span className="text-xl font-semibold">{consoleName}</span>
+                </div>
+              ))}
+            </div>
           </section>
 
           {/* Offer Section */}
