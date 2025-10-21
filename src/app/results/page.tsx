@@ -5,10 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useContext, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { SoundContext } from '@/context/sound-context';
 
 const testimonialImages = [
   {
@@ -30,6 +31,11 @@ function ResultsContent() {
   const searchParams = useSearchParams();
   const score = searchParams.get('score');
   const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const soundContext = useContext(SoundContext);
+
+  useEffect(() => {
+    soundContext?.playSound('background');
+  }, [soundContext]);
 
   return (
     <div className="container mx-auto px-4 py-8 flex-grow flex flex-col items-center min-h-[calc(100vh-128px)]">
