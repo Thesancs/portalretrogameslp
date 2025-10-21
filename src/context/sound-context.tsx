@@ -4,7 +4,7 @@
 import { createContext, useState, useCallback, ReactNode, useRef, RefObject, useEffect } from 'react';
 import * as Tone from 'tone';
 
-type SoundType = 'background' | 'waiting' | 'coin' | 'quiz_start';
+type SoundType = 'background' | 'waiting' | 'coin' | 'quiz_start' | 'quiz_music';
 
 interface SoundContextType {
   isSoundOn: boolean;
@@ -27,6 +27,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     waiting: useRef<HTMLAudioElement>(null),
     coin: useRef<HTMLAudioElement>(null),
     quiz_start: useRef<HTMLAudioElement>(null),
+    quiz_music: useRef<HTMLAudioElement>(null),
   };
 
   const initializeAudio = useCallback(async () => {
@@ -40,6 +41,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
         if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
         if(audioRefs.quiz_start.current) audioRefs.quiz_start.current.volume = 0.5;
+        if(audioRefs.quiz_music.current) audioRefs.quiz_music.current.volume = 0.4;
 
         setIsInitialized(true);
         console.log("Audio context initialized.");
@@ -60,10 +62,11 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     if (!isInitialized) return; // a second check in case initialization fails
     
     const audioRef = audioRefs[soundType];
+    const isOneShotSound = soundType === 'coin' || soundType === 'quiz_start';
 
     if (!audioRef?.current) return;
     try {
-        if(soundType !== 'coin' && soundType !== 'quiz_start') {
+        if(!isOneShotSound) {
             // Stop other looping sounds
             for (const key in audioRefs) {
                 const otherRef = audioRefs[key as SoundType];
@@ -75,12 +78,12 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         }
         audioRef.current.currentTime = 0;
         await audioRef.current.play();
-        if(soundType !== 'coin' && soundType !== 'quiz_start') {
+        if(!isOneShotSound) {
           setIsSoundOn(true);
         }
     } catch (error) {
         console.error(`Audio play failed for ${soundType}:`, error);
-        if(soundType !== 'coin' && soundType !== 'quiz_start') setIsSoundOn(false);
+        if(!isOneShotSound) setIsSoundOn(false);
     }
   }, [isInitialized, initializeAudio]);
 
@@ -91,6 +94,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
             ref.current.currentTime = 0;
         }
     }
+    const isOneShotSound = soundType === 'coin' || soundType === 'quiz_start';
 
     if (soundType) {
         stop(audioRefs[soundType]);
@@ -101,7 +105,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     }
     
     // If we stop all sounds or the main background, set sound to off
-    if(!soundType || (soundType !== 'coin' && soundType !== 'quiz_start')) {
+    if(!soundType || !isOneShotSound) {
         setIsSoundOn(false);
     }
 
@@ -115,14 +119,14 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     }
     if (!isInitialized) return;
 
-    const isAnyLoopingSoundOn = audioRefs.background.current?.paused === false || audioRefs.waiting.current?.paused === false;
+    const isAnyLoopingSoundOn = Object.values(audioRefs).some(ref => ref.current && !ref.current.paused && ref.current.loop);
 
     if (isAnyLoopingSoundOn) {
         stopSound();
     } else {
         await playSound(soundType);
     }
-  }, [isInitialized, initializeAudio, playSound, stopSound]);
+  }, [isInitialized, initializeAudio, playSound, stopSound, audioRefs]);
   
   return (
     <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, stopSound, isInitialized, initializeAudio, audioRefs }}>

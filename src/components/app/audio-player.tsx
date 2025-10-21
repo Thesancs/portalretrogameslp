@@ -12,6 +12,7 @@ export default function AudioPlayer() {
     const waitingRef = useRef<HTMLAudioElement>(null);
     const coinRef = useRef<HTMLAudioElement>(null);
     const quizStartRef = useRef<HTMLAudioElement>(null);
+    const quizMusicRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
         if (soundContext) {
@@ -19,6 +20,7 @@ export default function AudioPlayer() {
             (soundContext.audioRefs.waiting as React.MutableRefObject<HTMLAudioElement | null>).current = waitingRef.current;
             (soundContext.audioRefs.coin as React.MutableRefObject<HTMLAudioElement | null>).current = coinRef.current;
             (soundContext.audioRefs.quiz_start as React.MutableRefObject<HTMLAudioElement | null>).current = quizStartRef.current;
+            (soundContext.audioRefs.quiz_music as React.MutableRefObject<HTMLAudioElement | null>).current = quizMusicRef.current;
         }
     }, [soundContext]);
 
@@ -37,6 +39,9 @@ export default function AudioPlayer() {
             </audio>
             <audio ref={quizStartRef}>
               <source src="/sounds/shit-here-we-go-again.mp3" type="audio/mpeg" />
+            </audio>
+            <audio ref={quizMusicRef} loop>
+              <source src="/sounds/mk-soundtrack.mp3" type="audio/mpeg" />
             </audio>
         </>
     );

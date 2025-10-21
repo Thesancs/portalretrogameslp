@@ -96,13 +96,7 @@ export default function QuizPage() {
   useEffect(() => {
     soundContext?.initializeAudio();
   }, [soundContext]);
-
-  useEffect(() => {
-    if (step === 0 && soundContext?.isInitialized) {
-      soundContext.playSound('quiz_start');
-    }
-  }, [step, soundContext?.isInitialized]);
-
+  
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
       setStep(step + 1);
@@ -137,6 +131,10 @@ export default function QuizPage() {
         const randomPoints = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
         setScore(prevScore => prevScore + randomPoints);
         soundContext?.playSound('coin');
+    }
+
+    if (step === 0) {
+      soundContext?.playSound('quiz_music');
     }
 
     setAnswer(step, value);
