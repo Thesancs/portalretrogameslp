@@ -88,8 +88,8 @@ export default function WaitingRoomPage() {
                   src={waitingRoomImage.imageUrl} 
                   alt={waitingRoomImage.description}
                   data-ai-hint={waitingRoomImage.imageHint}
-                  width={200} 
-                  height={200} 
+                  width={250} 
+                  height={250} 
                   unoptimized
                 />
               </div>
