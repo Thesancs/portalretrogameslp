@@ -13,7 +13,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const waitingRoomImage = PlaceHolderImages.find(p => p.id === 'waiting-room-gif')!;
 
 export default function WaitingRoomPage() {
-  const [position, setPosition] = useState(3456);
+  const [position, setPosition] = useState(3426);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
@@ -23,8 +23,8 @@ export default function WaitingRoomPage() {
       soundContext.playSound();
     }
 
-    const startValue = 3456;
-    const duration = 15000; // 15 seconds
+    const startValue = 3426;
+    const duration = 10000; // 10 seconds
     const intervalTime = 100; // update every 100ms
     
     let remainingValue = startValue;
@@ -42,7 +42,7 @@ export default function WaitingRoomPage() {
 
         // Calculate a random decrement, making it larger as we get closer to the end
         const progress = elapsedTime / duration;
-        const randomFactor = Math.random() * (20 + progress * 200); // Jumps get bigger
+        const randomFactor = Math.random() * (10 + progress * 150); // Jumps get bigger
         const decrement = Math.min(remainingValue, Math.floor(randomFactor));
         
         const newPosition = remainingValue - decrement;
@@ -96,7 +96,7 @@ export default function WaitingRoomPage() {
                    Você está na fila para acessar o PORTAL RETRÔ GAMES™
                 </p>
                 <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
-                    <div className="loader"></div>
+                    { position > 0 && <div className="loader"></div> }
                     <span>Posição: <span className='text-primary text-glow'>{position}</span></span>
                 </div>
               </div>
