@@ -69,13 +69,13 @@
     {
       "id": "console-n64",
       "description": "Nintendo 64 console",
-      "imageUrl": "https://images.unsplash.com/photo-1593979029976-7d15b0213197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbnRlbmRvJTIwNjQlMjBjb25zb2xlfGVufDB8fHx8MTc2MDk0ODk0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/image/QUIZ/supernintendo64.png",
       "imageHint": "nintendo 64 console"
     },
     {
       "id": "console-megadrive",
       "description": "Sega Mega Drive / Genesis console",
-      "imageUrl": "https://images.unsplash.com/photo-1611956417584-358b543c7b4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZWdhJTIwbWVnYSUyMGRyaXZlfGVufDB8fHx8MTc2MDk0ODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/image/QUIZ/mega-drive.png",
       "imageHint": "sega megadrive"
     },
     {
