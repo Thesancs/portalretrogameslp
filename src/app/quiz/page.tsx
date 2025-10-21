@@ -273,7 +273,7 @@ export default function QuizPage() {
                             data-ai-hint={opt.image.imageHint}
                             width={200}
                             height={150}
-                            className="rounded-md object-contain aspect-[4/3] mb-2"
+                            className={cn("rounded-md mb-2", opt.label === 'Mega Drive' || opt.label === 'PlayStation 1' ? 'object-contain' : 'object-cover', "aspect-[4/3]")}
                           />
                         )}
                         <span className="font-semibold">{opt.label}</span>
@@ -292,7 +292,7 @@ export default function QuizPage() {
                             key={optionLabel} 
                             htmlFor={optionLabel} 
                             className={cn(
-                               "btn-pixel !font-body !text-lg !font-bold !normal-case tracking-normal text-center justify-center items-center !flex-col !h-24",
+                               "btn-pixel !font-body !text-lg !font-bold !normal-case tracking-normal !flex-col !h-24",
                                {
                                    "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === optionLabel
                                }
@@ -300,7 +300,7 @@ export default function QuizPage() {
                            >
                              <RadioGroupItem value={optionLabel} id={optionLabel} className="sr-only" onClick={() => handleAnswerSelection(optionLabel)} />
                              {Icon && <Icon className="h-6 w-6 mb-2" />}
-                             <span>{optionLabel}</span>
+                             <span className="text-center">{optionLabel}</span>
                            </Label>
                         )
                     })}
