@@ -11,7 +11,7 @@ export default function AudioPlayer() {
     return (
         <>
             <audio ref={soundContext.audioRefs.background} loop>
-              <source src="/sound/Super Mario 64 Remastered - Dire, Dire Docks - Church of Kondo (youtube).mp3" type="audio/mpeg" />
+              <source src="/sounds/sound_.mp3" type="audio/mpeg" />
             </audio>
             <audio ref={soundContext.audioRefs.waiting} loop>
               <source src="/sounds/sound_.mp3" type="audio/mpeg" />
