@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MoveDownIcon } from 'lucide-react';
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@/components/app/pixel-art-icons';
@@ -11,6 +11,10 @@ import { usePathname } from 'next/navigation';
 const SoundToggle = () => {
   const soundContext = useContext(SoundContext);
   const pathname = usePathname();
+
+  useEffect(() => {
+    soundContext?.initializeAudio();
+  }, [soundContext]);
 
   if (!soundContext) {
     return null;
@@ -24,7 +28,7 @@ const SoundToggle = () => {
   if (pathname !== '/') {
       return (
          <Button
-            onClick={soundContext.toggleSound}
+            onClick={() => soundContext.toggleSound()}
             variant="ghost"
             size="icon"
             className="text-muted-foreground hover:text-foreground"
@@ -39,13 +43,12 @@ const SoundToggle = () => {
       )
   }
 
-
   const { isSoundOn, toggleSound } = soundContext;
   
   return (
     <div className="flex flex-col items-center gap-2">
       <Button
-        onClick={toggleSound}
+        onClick={() => toggleSound()}
         variant="ghost"
         size="lg"
         className="flex items-center gap-4 text-muted-foreground hover:text-foreground p-4 rounded-lg animate-glow"

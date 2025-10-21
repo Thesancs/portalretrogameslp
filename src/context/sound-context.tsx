@@ -1,7 +1,7 @@
 
 'use client';
 
-import { createContext, useState, useCallback, ReactNode, useRef, RefObject } from 'react';
+import { createContext, useState, useCallback, ReactNode, useRef, RefObject, useEffect } from 'react';
 import * as Tone from 'tone';
 
 type SoundType = 'background' | 'waiting' | 'coin';
@@ -30,16 +30,25 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
 
   const initializeAudio = useCallback(async () => {
     if (isInitialized) return;
-    await Tone.start();
-    
-    // Set volumes
-    if(audioRefs.background.current) audioRefs.background.current.volume = 0.3;
-    if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
-    if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
+    try {
+        await Tone.start();
+        
+        // Set volumes
+        if(audioRefs.background.current) audioRefs.background.current.volume = 0.3;
+        if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
+        if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
 
-    setIsInitialized(true);
+        setIsInitialized(true);
+    } catch (error) {
+        console.error("Failed to initialize audio:", error);
+    }
   }, [isInitialized, audioRefs.background, audioRefs.waiting, audioRefs.coin]);
 
+  useEffect(() => {
+    if (!isInitialized) {
+        initializeAudio();
+    }
+  }, [isInitialized, initializeAudio]);
 
   const playSound = useCallback(async (soundType: SoundType) => {
     if (!isInitialized) await initializeAudio();
@@ -93,6 +102,8 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
   const toggleSound = useCallback(async (soundType: SoundType = 'background') => {
     if (!isInitialized) {
       await initializeAudio();
+      // Need a slight delay to ensure Tone.start() has completed
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
     
     const audioRef = audioRefs[soundType];
