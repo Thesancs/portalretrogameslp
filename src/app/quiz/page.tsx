@@ -11,6 +11,7 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import * as Tone from 'tone';
 import { SoundContext } from '@/context/sound-context';
@@ -62,13 +63,13 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState<string[]>(Array(quizSteps.length).fill(''));
   const [score, setScore] = useState(0);
   const [animatingOption, setAnimatingOption] = useState<string | null>(null);
+  const [isBonusModalOpen, setIsBonusModalOpen] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
 
   const initializeQuizAudio = useCallback(async () => {
     if (selectionSynth) return;
     
-    // Tone.start might already be called by the global context
     if (soundContext && !soundContext.isInitialized) {
       await soundContext.initializeAudio();
     }
@@ -104,6 +105,11 @@ export default function QuizPage() {
     }
      setAnimatingOption(null);
   };
+  
+  const closeBonusModalAndContinue = () => {
+    setIsBonusModalOpen(false);
+    handleNext();
+  }
 
   const handleBack = () => {
     if (step > 0) {
@@ -119,10 +125,11 @@ export default function QuizPage() {
   }
 
   const handleAnswerSelection = (value: string) => {
-    if (animatingOption) return; // Prevent clicking while animating
+    if (animatingOption) return;
     
     if (answers[step] === '') {
-        setScore(prevScore => prevScore + 10);
+        const randomPoints = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
+        setScore(prevScore => prevScore + randomPoints);
     }
 
     if (soundContext?.isSoundOn && selectionSynth) {
@@ -132,28 +139,27 @@ export default function QuizPage() {
     setAnswer(step, value);
     setAnimatingOption(value);
 
+    // Show bonus popup after 3rd question (index 2)
+    if (step === 2) {
+      setTimeout(() => {
+        setIsBonusModalOpen(true);
+      }, 400); // Small delay for effect
+      return;
+    }
+
     // Animation sequence
-    // 1. Flash red animation (1.2s total for 3 flashes)
     setTimeout(() => {
-      // 2. Go to next question after animation
       handleNext();
     }, 1200); 
   };
   
-  const handleTextAnswerAndNext = (e: React.FormEvent) => {
-    e.preventDefault();
-    if(answers[step]) {
-        handleNext();
-    }
-  }
-
   const currentStep = quizSteps[step];
   const progressPercentage = ((step + 1) / quizSteps.length) * 100;
 
   return (
     
     <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
-      <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption })}>
+      <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption && !isBonusModalOpen })}>
         <CardHeader className="text-center">
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>
           <CardTitle className="text-2xl md:text-3xl font-bold">
@@ -262,6 +268,9 @@ export default function QuizPage() {
           <Button variant="outline" onClick={handleBack} disabled={step === 0}>
             Voltar
           </Button>
+          <div className="font-pixel text-primary text-glow">
+              Score: {score}
+          </div>
           <div className='w-24 text-right'>
              {step === quizSteps.length - 1 && (
                 <Button onClick={handleNext} disabled={!answers[step]}>
@@ -271,7 +280,24 @@ export default function QuizPage() {
           </div>
         </CardFooter>
       </Card>
+      
+      <AlertDialog open={isBonusModalOpen} onOpenChange={setIsBonusModalOpen}>
+        <AlertDialogContent className="bg-background/80 backdrop-blur-md border-accent/50 shadow-lg shadow-accent/20">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl font-pixel text-accent text-glow text-center">🎉 Parabéns, você liberou um bônus!</AlertDialogTitle>
+            <AlertDialogDescription className="text-center text-lg text-foreground/90 pt-4">
+              Todos os jogos de PS2, PS1, Xbox 360, e Xbox foram desbloqueados!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="!justify-center pt-4">
+            <AlertDialogAction onClick={closeBonusModalAndContinue} className="btn-pixel-accent">Ok</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       </div>
     
   );
 }
+
+    
