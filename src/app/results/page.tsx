@@ -2,37 +2,25 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
 import { Suspense } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const testimonials = [
+const testimonialImages = [
   {
-    name: 'João "Gamer" Silva',
-    title: 'Jogador das Antigas',
-    avatar: 'JS',
-    comment: 'Eu achei que nunca mais ia sentir a emoção de jogar Street Fighter no fliperama. Essa plataforma me levou de volta no tempo. Incrível!',
+    src: '/image/depoimentos/depoimento4games.png',
+    alt: 'Depoimento 1',
   },
   {
-    name: 'Mariana "LevelUp" Costa',
-    title: 'Fã de RPGs Clássicos',
-    avatar: 'MC',
-    comment: 'Final Fantasy VII, Chrono Trigger... todos os jogos que marcaram minha adolescência estão aqui. É a melhor compra que fiz em anos.',
+    src: '/image/depoimentos/depoimento 5 games.png',
+    alt: 'Depoimento 2',
   },
   {
-    name: 'Pedro "16-Bit" Almeida',
-    title: 'Colecionador de Consoles',
-    avatar: 'PA',
-    comment: 'A quantidade de consoles e jogos é absurda. Acesso vitalício por esse preço? É simplesmente imperdível pra quem ama a história dos games.',
-  },
-    {
-    name: 'Carla "Pixel" Souza',
-    title: 'Speedrunner Amadora',
-    avatar: 'CS',
-    comment: 'A performance é ótima, consigo treinar minhas runs de Super Metroid sem nenhum lag. Recomendo pra qualquer um que leva a jogatina a sério.',
+    src: '/image/depoimentos/depoimento3games.png',
+    alt: 'Depoimento 3',
   },
 ];
 
@@ -84,27 +72,16 @@ function ResultsContent() {
                 className="w-full"
             >
                 <CarouselContent>
-                    {testimonials.map((testimonial, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                            <div className="p-1 h-full">
-                                <Card className="h-full flex flex-col justify-between bg-card/80 border-primary/20">
-                                    <CardContent className="p-6 text-left space-y-4">
-                                        <div className="flex items-center gap-4">
-                                            <Avatar>
-                                                <AvatarImage src={`https://i.pravatar.cc/40?u=${testimonial.avatar}`} />
-                                                <AvatarFallback>{testimonial.avatar}</AvatarFallback>
-                                            </Avatar>
-                                            <div>
-                                                <p className="font-bold">{testimonial.name}</p>
-                                                <p className="text-xs text-muted-foreground">{testimonial.title}</p>
-                                            </div>
-                                        </div>
-                                        <p className="text-sm italic text-foreground/80">"{testimonial.comment}"</p>
-                                        <div className="flex text-yellow-400">
-                                          {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                    {testimonialImages.map((testimonial, index) => (
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-full">
+                            <div className="p-1 h-full flex justify-center">
+                                <Image 
+                                  src={testimonial.src}
+                                  alt={testimonial.alt}
+                                  width={400}
+                                  height={200}
+                                  className="rounded-lg object-contain"
+                                />
                             </div>
                         </CarouselItem>
                     ))}
