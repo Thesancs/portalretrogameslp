@@ -5,9 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 const testimonialImages = [
   {
@@ -28,6 +29,7 @@ const testimonialImages = [
 function ResultsContent() {
   const searchParams = useSearchParams();
   const score = searchParams.get('score');
+  const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   return (
     <div className="container mx-auto px-4 py-8 flex-grow flex flex-col items-center min-h-[calc(100vh-128px)]">
@@ -65,6 +67,7 @@ function ResultsContent() {
        <section className="w-full max-w-4xl mx-auto pt-16 text-center">
             <h3 className="text-3xl font-headline mb-8">O que outros players estão dizendo:</h3>
             <Carousel
+                plugins={[autoplayPlugin.current]}
                 opts={{
                     align: "start",
                     loop: true,
