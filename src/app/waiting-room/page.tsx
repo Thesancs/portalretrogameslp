@@ -14,7 +14,7 @@ const waitingRoomImage = PlaceHolderImages.find(p => p.id === 'waiting-room-gif'
 
 export default function WaitingRoomPage() {
   const [position, setPosition] = useState(3426);
-  const [showButton, setShowButton] = useState(false);
+  const [status, setStatus] = useState<'counting' | 'releasing' | 'ready'>('counting');
   const router = useRouter();
   const soundContext = useContext(SoundContext);
 
@@ -23,19 +23,21 @@ export default function WaitingRoomPage() {
       soundContext.playSound();
     }
 
+    if (status !== 'counting') return;
+
     const startValue = 3426;
-    const duration = 10000; // 10 seconds
+    const duration = 10000; // ~10 seconds
     const intervalTime = 100; // update every 100ms
     
     let remainingValue = startValue;
-    let startTime = Date.now();
+    const startTime = Date.now();
 
     const positionInterval = setInterval(() => {
         const elapsedTime = Date.now() - startTime;
         
         if (elapsedTime >= duration) {
           setPosition(0);
-          setShowButton(true);
+          setStatus('releasing');
           clearInterval(positionInterval);
           return;
         }
@@ -55,7 +57,17 @@ export default function WaitingRoomPage() {
     return () => {
       clearInterval(positionInterval);
     };
-  }, [soundContext]);
+  }, [soundContext, status]);
+
+  useEffect(() => {
+    if (status === 'releasing') {
+      const timer = setTimeout(() => {
+        setStatus('ready');
+      }, 2000); // Wait for 2 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
 
   const handleEnterPortal = () => {
     router.push('/quiz');
@@ -91,14 +103,37 @@ export default function WaitingRoomPage() {
                 <p>Hoje, ela volta.<br />Não pra te entreter.<br />Mas pra te lembrar de quem você era quando tudo era simples, divertido e mágico.</p>
               </div>
 
-              <div className="my-8 p-4 bg-muted/50 rounded-lg border border-dashed border-accent/50 space-y-4">
-                <p className="text-lg font-semibold text-accent">
-                   Você está na fila para acessar o PORTAL RETRÔ GAMES™
-                </p>
-                <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
-                    { position > 0 && <div className="loader"></div> }
-                    <span>Posição: <span className='text-primary text-glow'>{position}</span></span>
-                </div>
+              <div className="my-8 p-4 bg-muted/50 rounded-lg border border-dashed border-accent/50 space-y-4 min-h-[100px] flex flex-col items-center justify-center">
+                <AnimatePresence mode="wait">
+                  {status === 'counting' && (
+                    <motion.div
+                      key="counting"
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full"
+                    >
+                      <p className="text-lg font-semibold text-accent">
+                         Você está na fila para acessar o PORTAL RETRÔ GAMES™
+                      </p>
+                      <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
+                          <div className="loader"></div>
+                          <span>Posição: <span className='text-primary text-glow'>{position}</span></span>
+                      </div>
+                    </motion.div>
+                  )}
+                  {status === 'releasing' && (
+                    <motion.p
+                      key="releasing"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="text-lg font-semibold text-accent"
+                    >
+                      Aguarde, estamos liberando o acesso...
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
@@ -110,7 +145,7 @@ export default function WaitingRoomPage() {
 
           <div className="h-16 flex items-center justify-center pt-4">
             <AnimatePresence>
-              {showButton && (
+              {status === 'ready' && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
