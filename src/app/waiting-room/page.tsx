@@ -61,8 +61,8 @@ export default function WaitingRoomPage() {
               </h2>
 
               <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
-                <p>🎵 Você lembra disso, né?</p>
-                <p>Esse som... essa melodia...<br />Já fez você sorrir.<br />Já te teleportou pra outro mundo, mesmo sentado no chão da sala.</p>
+                <p>🎵 Eu sei que tirei um sorriso seu...</p>
+                <p>Esse som... essa melodia...<br />Já te teleportou pra outro mundo, mesmo sentado no chão da sala.</p>
                 <p>Hoje, ela volta.<br />Não pra te entreter.<br />Mas pra te lembrar de quem você era quando tudo era simples, divertido e mágico.</p>
               </div>
 
