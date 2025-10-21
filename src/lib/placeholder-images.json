@@ -21,13 +21,13 @@
     {
       "id": "sales-gameplay-3",
       "description": "Gameplay footage from an 8-bit game.",
-      "imageUrl": "https://images.unsplash.com/photo-1593119111396-04f1f2a37edd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHw4LWJpdCUyMGdhbWV8ZW58MHx8fHwxNzYwNzg5Njc3fDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1593119111396-04f1f2a37edd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHw4LWJpdCUyMGdhbWV8ZW58MHx8fHwxNzYwNzg5Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "8-bit game"
     },
     {
       "id": "checkout-bonus",
       "description": "Image of a stack of retro game cartridges.",
-      "imageUrl": "https://images.unsplash.com/photo-1715294925583-4dea3a1f5789?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYW1lJTIwY2FydHJpZGdlc3xlbnwwfHx8fDE3NjA3ODk2Nzd8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1715294925583-4dea3a1f5789?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYW1lJTIwY2FydHJpZGdlc3xlbnwwfHx8fDE3NjA3ODk2Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "game cartridges"
     },
     {
@@ -38,21 +38,21 @@
     },
     {
       "id": "entry-image-2",
-      "description": "The original PlayStation console menu screen",
-      "imageUrl": "https://images.unsplash.com/photo-1573788708917-3d447b0d6271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwbGF5c3RhdGlvbiUyMG1lbnV8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib_rb-4.1.0&q=80&w=1080",
-      "imageHint": "playstation menu"
+      "description": "A character from a classic fighting game.",
+      "imageUrl": "/image/mercadorrse4.gif",
+      "imageHint": "fighting game gif"
     },
     {
       "id": "entry-image-3",
-      "description": "A character from a classic 16-bit RPG game",
-      "imageUrl": "https://images.unsplash.com/photo-1590308272905-e1a8b1555915?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxycGclMjBjaGFyYWN0ZXJ8ZW58MHx8fHwxNzYwNzkwMjc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "rpg character"
+      "description": "A scene from a classic fighting game.",
+      "imageUrl": "/image/mortal-kombat.gif",
+      "imageHint": "mortal kombat gif"
     },
     {
       "id": "entry-image-4",
-      "description": "An arcade cabinet in a dark room",
-      "imageUrl": "https://images.unsplash.com/photo-1759171053096-e7dbe7c36eb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcmNhZGUlMjBjYWJpbmV0fGVufDB8fHx8MTc2MDc5MDI3OXww&ixlib-rb-4.1.0&q=80&w=1080",
-      "imageHint": "arcade cabinet"
+      "description": "A scene from a classic adventure game.",
+      "imageUrl": "/image/ocarina-of-time-the-legend-of-zelda.gif",
+      "imageHint": "zelda gif"
     },
     {
       "id": "console-snes",
@@ -69,13 +69,13 @@
     {
       "id": "console-n64",
       "description": "Nintendo 64 console",
-      "imageUrl": "https://images.unsplash.com/photo-1593979029976-7d15b0213197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbnRlbmRvJTIwNjQlMjBjb25zb2xlfGVufDB8fHx8MTc2MDk0ODk0MXww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1593979029976-7d15b0213197?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbnRlbmRvJTIwNjQlMjBjb25zb2xlfGVufDB8fHx8MTc2MDk0ODk0MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "nintendo 64 console"
     },
     {
       "id": "console-megadrive",
       "description": "Sega Mega Drive / Genesis console",
-      "imageUrl": "https://images.unsplash.com/photo-1611956417584-358b543c7b4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZWdhJTIwbWVnYSUyMGRyaXZlfGVufDB8fHx8MTc2MDk0ODk3N3ww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1611956417584-358b543c7b4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZWdhJTIwbWVnYSUyMGRyaXZlfGVufDB8fHx8MTc2MDk0ODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "sega megadrive"
     }
   ]
