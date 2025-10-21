@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, CheckCircle } from 'lucide-react';
+import { Check, CheckCircle, Gamepad2, Tv, Wifi } from 'lucide-react';
 import { ControllerIcon, ConsoleIcon, JoystickIcon } from '@/components/app/pixel-art-icons';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
@@ -21,10 +21,17 @@ const gameIcons = [
 ];
 
 const features = [
-  { text: "+100.000 jogos clássicos", icon: ControllerIcon },
-  { text: "52 consoles retrô em 1", icon: ConsoleIcon },
-  { text: "Acesso vitalício, sem mensalidade", icon: JoystickIcon },
-  { text: "Compatível com PC, TV, e mais", icon: Check },
+    { text: "100 Mil Jogos Nostálgicos", icon: ControllerIcon },
+    { text: "Pagamento Único", icon: Check },
+    { text: "É só baixar, instalar e jogar!", icon: Check },
+    { text: "Jogue no celular, Computador, Tablet, TV, TV Box, Video Game...", icon: Tv },
+    { text: "Jogue de qualquer lugar", icon: Wifi },
+    { text: "Simples e Fácil", icon: Check },
+    { text: "Suporte Técnico", icon: Check },
+    { text: "Diversão Garantida", icon: Check },
+    { text: "Bônus Exclusivo: Jogos Traduzidos para português", icon: Check },
+    { text: "Jogos de PS1,PS2,PS3,XBOX 360", icon: Gamepad2 },
+    { text: "Bônus Extra: Jogos em Alta Qualidade (Full HD)", icon: Check },
 ];
 
 const consoleList = [
