@@ -97,6 +97,12 @@ export default function QuizPage() {
     soundContext?.initializeAudio();
   }, [soundContext]);
 
+  useEffect(() => {
+    if (step === 0 && soundContext?.isSoundOn) {
+      soundContext.playSound('quiz_start');
+    }
+  }, [step, soundContext]);
+
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
       setStep(step + 1);

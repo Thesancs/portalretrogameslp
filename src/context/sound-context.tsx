@@ -4,7 +4,7 @@
 import { createContext, useState, useCallback, ReactNode, useRef, RefObject, useEffect } from 'react';
 import * as Tone from 'tone';
 
-type SoundType = 'background' | 'waiting' | 'coin';
+type SoundType = 'background' | 'waiting' | 'coin' | 'quiz_start';
 
 interface SoundContextType {
   isSoundOn: boolean;
@@ -26,6 +26,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     background: useRef<HTMLAudioElement>(null),
     waiting: useRef<HTMLAudioElement>(null),
     coin: useRef<HTMLAudioElement>(null),
+    quiz_start: useRef<HTMLAudioElement>(null),
   };
 
   const initializeAudio = useCallback(async () => {
@@ -38,6 +39,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         if(audioRefs.background.current) audioRefs.background.current.volume = 0.3;
         if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
         if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
+        if(audioRefs.quiz_start.current) audioRefs.quiz_start.current.volume = 0.5;
 
         setIsInitialized(true);
         console.log("Audio context initialized.");
@@ -61,7 +63,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
 
     if (!audioRef?.current) return;
     try {
-        if(soundType !== 'coin') {
+        if(soundType !== 'coin' && soundType !== 'quiz_start') {
             // Stop other looping sounds
             for (const key in audioRefs) {
                 const otherRef = audioRefs[key as SoundType];
@@ -76,7 +78,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         setIsSoundOn(true);
     } catch (error) {
         console.error(`Audio play failed for ${soundType}:`, error);
-        if(soundType !== 'coin') setIsSoundOn(false);
+        if(soundType !== 'coin' && soundType !== 'quiz_start') setIsSoundOn(false);
     }
   }, [isInitialized, initializeAudio]);
 
@@ -97,7 +99,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
     }
     
     // If we stop all sounds or the main background, set sound to off
-    if(!soundType || soundType !== 'coin') {
+    if(!soundType || (soundType !== 'coin' && soundType !== 'quiz_start')) {
         setIsSoundOn(false);
     }
 
