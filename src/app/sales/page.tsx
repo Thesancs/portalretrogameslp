@@ -126,6 +126,15 @@ export default function SalesPage() {
                   <p className="text-2xl font-bold">Tudo isso de <span className="line-through text-muted-foreground">R$127,90</span> por um pagamento único de</p>
                   <p className="font-pixel text-5xl md:text-6xl text-primary text-glow">R$19,90</p>
                   <p className="text-muted-foreground">Por menos que um lanche, você revive uma vida inteira de memórias.</p>
+                  <div className="flex justify-center pt-4">
+                    <Image
+                      src="/image/icons/cartoes.png"
+                      alt="Métodos de pagamento"
+                      width={300}
+                      height={50}
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
                 <div className="text-center pt-4">
                   <Link href="/checkout" className="btn-pixel !text-xl !px-10 !py-5">

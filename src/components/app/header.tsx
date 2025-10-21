@@ -9,7 +9,7 @@ export default function Header() {
           <Image
             src="/image/logo.png"
             alt="Portal Retro Games Logo"
-            width={78}
+            width={58}
             height={32}
             priority
           />
