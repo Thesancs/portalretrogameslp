@@ -81,8 +81,8 @@
     {
       "id": "waiting-room-gif",
       "description": "An animated gif of a classic game character.",
-      "imageUrl": "/image/gif-portal-2.gif",
-      "imageHint": "animated character gif"
+      "imageUrl": "/image/playstation-playstation2.gif",
+      "imageHint": "playstation gif"
     }
   ]
 }
