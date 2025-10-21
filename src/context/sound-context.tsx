@@ -70,7 +70,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
             // Stop other looping sounds
             for (const key in audioRefs) {
                 const otherRef = audioRefs[key as SoundType];
-                if (otherRef?.current && !otherRef.current.paused && key !== soundType) {
+                if (key !== soundType && otherRef.current && otherRef.current.loop) {
                     otherRef.current.pause();
                     otherRef.current.currentTime = 0;
                 }
@@ -85,7 +85,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         console.error(`Audio play failed for ${soundType}:`, error);
         if(!isOneShotSound) setIsSoundOn(false);
     }
-  }, [isInitialized, initializeAudio]);
+  }, [isInitialized, initializeAudio, audioRefs]);
 
   const stopSound = useCallback((soundType?: SoundType) => {
     const stop = (ref: RefObject<HTMLAudioElement> | null) => {
@@ -109,7 +109,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         setIsSoundOn(false);
     }
 
-  }, []);
+  }, [audioRefs]);
 
   const toggleSound = useCallback(async (soundType: SoundType = 'background') => {
     if (!isInitialized) {
