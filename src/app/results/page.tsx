@@ -1,36 +1,24 @@
-
 "use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { CheckCircle, Trophy, Star } from 'lucide-react';
 import { Suspense, useRef, useContext, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { CheckCircle, Trophy, Sparkles } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { SoundContext } from '@/context/sound-context';
 
 const testimonialImages = [
-  {
-    src: '/image/depoimentos/depoimento4games.png',
-    alt: 'Depoimento 1',
-  },
-  {
-    src: '/image/depoimentos/depoimento 5 games.png',
-    alt: 'Depoimento 2',
-  },
-  {
-    src: '/image/depoimentos/depoimento3games.png',
-    alt: 'Depoimento 3',
-  },
+  { src: '/image/depoimentos/depoimento4games.png', alt: 'Depoimento 1' },
+  { src: '/image/depoimentos/depoimento 5 games.png', alt: 'Depoimento 2' },
+  { src: '/image/depoimentos/depoimento3games.png', alt: 'Depoimento 3' },
 ];
-
 
 function ResultsContent() {
   const searchParams = useSearchParams();
   const score = searchParams.get('score');
-  const autoplayPlugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const autoplayPlugin = useRef(Autoplay({ delay: 3500, stopOnInteraction: false, stopOnMouseEnter: true }));
   const soundContext = useContext(SoundContext);
 
   useEffect(() => {
@@ -38,82 +26,109 @@ function ResultsContent() {
   }, [soundContext]);
 
   return (
-    <div className="container mx-auto px-4 py-8 flex-grow flex flex-col items-center min-h-[calc(100vh-128px)]">
-      <div className="text-center w-full max-w-3xl mx-auto space-y-8">
-        <div className="relative inline-block">
-            <CheckCircle className="h-24 w-24 text-accent animate-pulse" />
-        </div>
-        
-        <h2 
-            className="text-4xl sm:text-5xl md:text-6xl font-pixel uppercase text-glow text-primary"
-        >
-            Memória Desbloqueada!
-        </h2>
-        
-        <p className="text-xl md:text-2xl text-foreground">
-            Você ainda tem o espírito gamer das antigas...
-        </p>
+    <div className="container mx-auto flex min-h-[calc(100vh-160px)] flex-col justify-center px-4 py-12">
+      <div className="retro-panel w-full max-w-5xl self-center p-6 sm:p-10">
+        <div className="retro-panel-content space-y-12 text-center">
+          <div className="flex flex-col items-center gap-6">
+            <span className="glow-ring inline-flex h-28 w-28 items-center justify-center rounded-full border border-accent/50 bg-accent/10">
+              <CheckCircle className="h-16 w-16 text-accent" />
+            </span>
+            <div className="space-y-4">
+              <h2 className="text-3xl font-pixel uppercase text-glow text-primary sm:text-5xl">
+                Memoria desbloqueada!
+              </h2>
+              <p className="text-base text-muted-foreground sm:text-lg">
+                Voce ainda tem o espirito gamer das antigas vivo  e agora tem o mapa para reviver tudo.
+              </p>
+            </div>
+          </div>
 
-        {score && (
-          <div className="p-4 bg-card border-2 border-dashed border-accent rounded-lg shadow-inner max-w-md mx-auto flex items-center justify-center gap-4">
-            <Trophy className="h-8 w-8 text-accent" />
-            <p className="text-xl md:text-2xl font-bold">
-              Pontuação Total: <span className="font-pixel text-accent text-glow">{score}</span>
+          {score && (
+            <div className="grid gap-4 rounded-3xl border border-primary/30 bg-background/70 p-6 text-sm text-muted-foreground shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:grid-cols-[auto,1fr] sm:text-left">
+              <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/40 bg-accent/15">
+                <Trophy className="h-7 w-7 text-accent" />
+              </span>
+              <div>
+                <p className="text-xs uppercase tracking-[0.35em] text-primary">Score final desbloqueado</p>
+                <p className="mt-2 flex items-baseline justify-center gap-2 font-pixel text-4xl text-primary text-glow sm:justify-start">
+                  {score}
+                  <span className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">pts</span>
+                </p>
+                <p className="mt-3 text-sm">
+                  Quanto maior o score, mais raro e o perfil nostalgico. Voce esta pronto para receber o passe completo.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              { label: '100 mil jogos lendarios', description: 'PS1, PS2, Mega Drive, SNES, arcades e muito mais.' },
+              { label: 'Instalacao rapida', description: 'Compativel com PC, TV Box e celular sem complicacao.' },
+              { label: 'Bonus exclusivos', description: 'Bibliotecas traduzidas, suporte vitalicio e atualizacoes.' },
+            ].map(info => (
+              <div key={info.label} className="rounded-2xl border border-primary/20 bg-secondary/40 p-5 text-sm text-muted-foreground/90">
+                <p className="text-xs uppercase tracking-[0.3em] text-primary">{info.label}</p>
+                <p className="mt-2">{info.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-3xl border border-primary/25 bg-background/70 p-6 text-sm text-muted-foreground">
+            <p>
+              Agora e hora de transformar nostalgia em jogatina real. O Portal Retro Games libera acesso a mais de{' '}
+              <span className="font-semibold text-accent">100.000 jogos lendarios</span> com instalacao guiada e suporte
+              dedicado. Mantenha o hype vivo e mergulhe novamente em cada fase marcante da sua historia gamer.
             </p>
           </div>
-        )}
-        
-        <div className="p-6 bg-card border rounded-lg shadow-inner max-w-2xl mx-auto">
-            <p className="text-lg md:text-xl">
-                Agora é hora de reviver tudo isso com mais de <span className="font-bold text-accent">100.000 jogos lendários</span>, compatíveis com PC, TV Box e celular.
-            </p>
-        </div>
-        
-         {/* Testimonials Section */}
-       <section className="w-full max-w-4xl mx-auto pt-16 text-center">
-            <h3 className="text-3xl font-headline mb-8">O que outros players estão dizendo:</h3>
+
+          <section className="space-y-6">
+            <div className="flex items-center justify-center gap-3 text-sm uppercase tracking-[0.35em] text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span>O que outros players estao dizendo</span>
+            </div>
             <Carousel
-                plugins={[autoplayPlugin.current]}
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className="w-full"
+              plugins={[autoplayPlugin.current]}
+              opts={{ align: 'start', loop: true }}
+              className="w-full"
             >
-                <CarouselContent>
-                    {testimonialImages.map((testimonial, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-full">
-                            <div className="p-1 h-full flex justify-center">
-                                <Image 
-                                  src={testimonial.src}
-                                  alt={testimonial.alt}
-                                  width={400}
-                                  height={200}
-                                  className="rounded-lg object-contain"
-                                />
-                            </div>
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious className="ml-12" />
-                <CarouselNext className="mr-12" />
+              <CarouselContent>
+                {testimonialImages.map((testimonial, index) => (
+                  <CarouselItem key={testimonial.src} className="md:basis-1/2 lg:basis-full">
+                    <div className="flex h-full items-center justify-center rounded-3xl border border-primary/20 bg-secondary/30 p-4">
+                      <Image
+                        src={testimonial.src}
+                        alt={testimonial.alt}
+                        width={420}
+                        height={240}
+                        className="rounded-2xl object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="ml-4" />
+              <CarouselNext className="mr-4" />
             </Carousel>
-        </section>
+          </section>
 
-        <Link href="/sales" className="btn-pixel-accent !text-lg !px-8 !py-4">
-            Ver Plataforma Agora
-        </Link>
+          <div className="flex flex-col items-center gap-4">
+            <Link href="/sales" className="btn-pixel-accent !px-12 !py-5 !text-lg">
+              Ver plataforma agora
+            </Link>
+            <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+              Acesso imediato  pagamento unico  suporte vitalicio
+            </p>
+          </div>
+        </div>
       </div>
-      
-      
-
     </div>
   );
 }
 
 export default function ResultsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Carregando...</div>}>
       <ResultsContent />
     </Suspense>
   );

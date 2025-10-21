@@ -1,158 +1,183 @@
-
 "use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, CheckCircle, Gamepad2, Tv, Wifi } from 'lucide-react';
-import { ControllerIcon, ConsoleIcon, JoystickIcon } from '@/components/app/pixel-art-icons';
+import { ControllerIcon } from '@/components/app/pixel-art-icons';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import Autoplay from "embla-carousel-autoplay";
+import Autoplay from 'embla-carousel-autoplay';
 
 const gameIcons = [
-    { src: '/image/icons/gow-icon.png', alt: 'God of War icon' },
-    { src: '/image/icons/gta-icon.png', alt: 'GTA icon' },
-    { src: '/image/icons/mk-1-icon.png', alt: 'Mortal Kombat 1 icon' },
-    { src: '/image/icons/resident-evil-icon.png', alt: 'Resident Evil icon' },
-    { src: '/image/icons/street fighter-icon.png', alt: 'Street Fighter icon' },
-    { src: '/image/icons/tekken-icon.png', alt: 'Tekken icon' },
-    { src: '/image/icons/top-gear-icon.png', alt: 'Top Gear icon' },
+  { src: '/image/icons/gow-icon.png', alt: 'God of War icon' },
+  { src: '/image/icons/gta-icon.png', alt: 'GTA icon' },
+  { src: '/image/icons/mk-1-icon.png', alt: 'Mortal Kombat 1 icon' },
+  { src: '/image/icons/resident-evil-icon.png', alt: 'Resident Evil icon' },
+  { src: '/image/icons/street fighter-icon.png', alt: 'Street Fighter icon' },
+  { src: '/image/icons/tekken-icon.png', alt: 'Tekken icon' },
+  { src: '/image/icons/top-gear-icon.png', alt: 'Top Gear icon' },
 ];
 
 const features = [
-    { text: "100 Mil Jogos Nostálgicos", icon: ControllerIcon },
-    { text: "Pagamento Único", icon: Check },
-    { text: "É só baixar, instalar e jogar!", icon: Check },
-    { text: "Jogue no celular, Computador, Tablet, TV, TV Box, Video Game...", icon: Tv },
-    { text: "Jogue de qualquer lugar", icon: Wifi },
-    { text: "Simples e Fácil", icon: Check },
-    { text: "Suporte Técnico", icon: Check },
-    { text: "Diversão Garantida", icon: Check },
-    { text: "Bônus Exclusivo: Jogos Traduzidos para português", icon: Check },
-    { text: "Jogos de PS1,PS2,PS3,XBOX 360", icon: Gamepad2 },
-    { text: "Bônus Extra: Jogos em Alta Qualidade (Full HD)", icon: Check },
+  { text: '100 mil jogos nostalgicos', icon: ControllerIcon },
+  { text: 'Pagamento unico', icon: Check },
+  { text: 'E so baixar, instalar e jogar', icon: Check },
+  { text: 'Jogue no celular, computador, TV, TV Box e videogame', icon: Tv },
+  { text: 'Acesso de qualquer lugar', icon: Wifi },
+  { text: 'Instalacao guiada e simples', icon: Check },
+  { text: 'Suporte tecnico dedicado', icon: Check },
+  { text: 'Diversao garantida', icon: Check },
+  { text: 'Bonus: jogos traduzidos para portugues', icon: Check },
+  { text: 'Colecoes de PS1, PS2, PS3 e Xbox 360', icon: Gamepad2 },
+  { text: 'Bonus extra: jogos em Full HD', icon: Check },
 ];
 
 const consoleList = [
-    "Playstation 1",
-    "Playstation 2",
-    "Playstation 3",
-    "PSP",
-    "Super Nintendo",
-    "Nintendo 64",
-    "Nintendo Wii",
-    "Nintendo 3DS",
-    "Atari",
-    "Mega Drive",
-    "Master System",
-    "GameBoy",
-    "Dreamcast",
-    "Sega Saturn",
-    "Arcade",
-    "Fliperamas e Muito mais..."
+  'PlayStation 1',
+  'PlayStation 2',
+  'PlayStation 3',
+  'PSP',
+  'Super Nintendo',
+  'Nintendo 64',
+  'Nintendo Wii',
+  'Nintendo 3DS',
+  'Atari',
+  'Mega Drive',
+  'Master System',
+  'Game Boy',
+  'Dreamcast',
+  'Sega Saturn',
+  'Arcade',
+  'Fliperamas e muito mais...',
 ];
 
 export default function SalesPage() {
-  const autoplayPlugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const autoplayPlugin = useRef(Autoplay({ delay: 2200, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   return (
-    
-      <div className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
-        <div className="max-w-4xl mx-auto space-y-12">
-          {/* Storytelling Section */}
-          <section className="text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline">
-              Você lembra do barulho do controle, do cheiro da locadora, da emoção de zerar um jogo sem salvar?
-            </h2>
-            <p className="text-base sm:text-lg text-muted-foreground">
-              Essa era não acabou. Ela apenas estava esperando por você.
-            </p>
-          </section>
+    <div className="container mx-auto flex min-h-[calc(100vh-160px)] flex-col justify-center px-3 py-10 sm:px-4 sm:py-12">
+      <div className="space-y-12 sm:space-y-16">
+        <section className="retro-panel mx-auto max-w-5xl p-4 sm:p-8 lg:p-10">
+          <div className="retro-panel-content grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div className="space-y-6 text-left">
+              <span className="retro-badge">Portal Retro Games</span>
+              <h2 className="text-3xl font-headline uppercase text-glow sm:text-4xl">
+                Lembra do clique do controle, do cheiro da locadora, de zerar sem poder salvar?
+              </h2>
+              <p className="text-base text-muted-foreground sm:text-lg">
+                Essa era nao acabou. Ela so estava esperando voce voltar. Reunimos tudo em uma plataforma com
+                instalacao guiada, suporte real e acesso vitalicio.
+              </p>
+              <div className="rounded-3xl border border-primary/25 bg-background/70 p-6 text-sm text-muted-foreground backdrop-blur-xl">
+                <p>
+                  Sao mais de <span className="font-semibold text-accent">100.000 jogos lendarios</span> para PC, TV Box,
+                  celular ou tablet. Voce escolhe onde jogar  nos entregamos o portal completo.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground/90">
+                <div className="rounded-full border border-primary/25 bg-secondary/40 px-4 py-2 uppercase tracking-[0.35em]">
+                  Compativel com tudo
+                </div>
+                <div className="rounded-full border border-primary/25 bg-secondary/40 px-4 py-2 uppercase tracking-[0.35em]">
+                  Pagamento unico
+                </div>
+              </div>
+            </div>
 
-          {/* Gameplay Gallery */}
-           <section className="w-full max-w-4xl mx-auto py-4">
-            <Carousel
-                plugins={[autoplayPlugin.current]}
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className="w-full"
-            >
-                <CarouselContent className="-ml-2">
-                    {gameIcons.map((icon, index) => (
-                        <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 pl-2">
-                            <div className="p-1 flex justify-center items-center">
-                                <Image 
-                                  src={icon.src}
-                                  alt={icon.alt}
-                                  width={100}
-                                  height={100}
-                                  className="object-contain border-2 border-primary rounded-md aspect-square"
-                                />
-                            </div>
-                        </CarouselItem>
+            <div className="flex justify-center">
+              <div className="w-full max-w-[260px] sm:max-w-sm lg:max-w-full rounded-3xl border border-primary/20 bg-secondary/30 p-4 shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+                <Carousel plugins={[autoplayPlugin.current]} opts={{ align: 'center', loop: true }} className="w-full">
+                  <CarouselContent className="items-center">
+                    {gameIcons.map(icon => (
+                      <CarouselItem key={icon.src} className="flex items-center justify-center">
+                        <Image
+                          src={icon.src}
+                          alt={icon.alt}
+                          width={140}
+                          height={140}
+                          className="rounded-2xl border border-primary/30 bg-black/40 p-3 object-contain"
+                        />
+                      </CarouselItem>
                     ))}
-                </CarouselContent>
-            </Carousel>
-          </section>
+                  </CarouselContent>
+                  <CarouselPrevious className="hidden sm:flex ml-2" />
+                  <CarouselNext className="hidden sm:flex mr-2" />
+                </Carousel>
+              </div>
+            </div>
+          </div>
+        </section>
 
-           {/* Console List Section */}
-          <section className="text-center space-y-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline uppercase">
-              Você terá acesso a <span className="text-primary text-glow">Jogos de:</span>
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 max-w-2xl mx-auto text-left">
-              {consoleList.map((consoleName) => (
-                <div key={consoleName} className="flex items-center gap-3">
-                  <CheckCircle className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-lg sm:text-xl font-semibold">{consoleName}</span>
+        <section className="retro-panel mx-auto max-w-5xl p-4 sm:p-8 lg:p-10">
+          <div className="retro-panel-content space-y-10">
+            <div className="text-center space-y-4">
+              <h3 className="text-2xl font-headline uppercase text-primary sm:text-3xl">
+                Tenha acesso imediato a jogos de:
+              </h3>
+              <p className="text-sm text-muted-foreground sm:text-base">
+                Bibliotecas completas, organizadas e prontas para jogar em minutos.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {consoleList.map(consoleName => (
+                <div
+                  key={consoleName}
+                  className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-secondary/40 px-4 py-3 text-left"
+                >
+                  <CheckCircle className="h-6 w-6 text-accent" />
+                  <span className="text-base font-semibold">{consoleName}</span>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Offer Section */}
-          <section>
-            <Card className="shadow-2xl border-2 sm:border-4 border-primary/50">
-              <CardHeader className="text-center px-4 sm:px-6">
-                <p className="font-pixel text-accent">A OFERTA DEFINITIVA</p>
-                <CardTitle className="text-3xl sm:text-4xl font-headline">Acesso Imediato à Nostalgia</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-8 px-4 sm:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base sm:text-lg">
-                  {features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-md">
-                      <feature.icon className="h-6 w-6 sm:h-8 sm:w-8 text-primary flex-shrink-0" />
-                      <span className="font-medium">{feature.text}</span>
+        <section className="retro-panel mx-auto max-w-5xl p-4 sm:p-8 lg:p-10">
+          <div className="retro-panel-content space-y-10">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+              <div className="space-y-5">
+                <span className="retro-badge">Oferta definitiva</span>
+                <h3 className="text-3xl font-headline uppercase text-primary sm:text-4xl">
+                  Acesso imediato a nostalgia
+                </h3>
+                <p className="text-sm text-muted-foreground sm:text-base">
+                  Tudo o que voce precisa para reviver a era de ouro dos games  organizado, atualizado e com suporte
+                  real de quem tambem viveu isso.
+                </p>
+                <div className="grid gap-3 text-sm sm:grid-cols-2">
+                  {features.map(feature => (
+                    <div key={feature.text} className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-secondary/40 px-4 py-3">
+                      <feature.icon className="h-5 w-5 text-primary" />
+                      <span>{feature.text}</span>
                     </div>
                   ))}
                 </div>
-                <div className="text-center space-y-4 pt-6">
-                  <p className="text-xl sm:text-2xl font-bold">Tudo isso de <span className="line-through text-muted-foreground">R$127,90</span> por um pagamento único de</p>
-                  <p className="font-pixel text-4xl sm:text-5xl md:text-6xl text-primary text-glow">R$19,90</p>
-                  <p className="text-sm sm:text-base text-muted-foreground">Por menos que um lanche, você revive uma vida inteira de memórias.</p>
-                  <div className="flex justify-center pt-4">
-                    <Image
-                      src="/image/icons/cartoes.png"
-                      alt="Métodos de pagamento"
-                      width={250}
-                      height={42}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <div className="text-center pt-4">
-                  <Link href="/checkout" className="btn-pixel !text-lg sm:!text-xl !px-8 sm:!px-10 !py-4 sm:!py-5">
-                    Quero Reviver Agora
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        </div>
+              </div>
+
+              <div className="flex flex-col gap-6 rounded-3xl border border-primary/30 bg-background/80 p-6 text-center text-sm text-muted-foreground shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+                <p className="text-xs uppercase tracking-[0.35em] text-primary">De R$127,90 por apenas</p>
+                <p className="font-pixel text-5xl text-primary text-glow">R$19,90</p>
+                <p>
+                  Menos que um lanche para ter uma vida inteira de memorias desbloqueadas, com atualizacoes e suporte.
+                </p>
+                <Image
+                  src="/image/icons/cartoes.png"
+                  alt="Metodos de pagamento"
+                  width={260}
+                  height={44}
+                  className="mx-auto h-10 w-auto object-contain"
+                />
+                <Link href="/checkout" className="btn-pixel !px-8 !py-4 !text-base sm:!px-10 sm:!text-lg">
+                  Quero reviver agora
+                </Link>
+                <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+                  Acesso imediato  garantia de 7 dias  suporte vitalicio
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    
+    </div>
   );
 }

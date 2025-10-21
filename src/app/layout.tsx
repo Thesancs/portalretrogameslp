@@ -25,12 +25,16 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <SoundProvider>
-          <Header />
-          <div className="bg-primary text-primary-foreground font-pixel text-center py-2 text-sm w-full z-40 animate-pulse">
-            APROVEITE AGORA NOSSO DESCONTO DE BLACK FRIDAY
+          <div className="relative flex min-h-screen flex-col retro-stage">
+            <span className="orb -top-40 -left-24 h-72 w-72" />
+            <span className="orb bottom-10 right-[-40px] h-60 w-60" />
+            <Header />
+            <div className="relative z-10 bg-primary/90 text-primary-foreground font-pixel text-center py-2 text-[10px] sm:text-xs tracking-[0.5em] uppercase shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+              APROVEITE AGORA NOSSO DESCONTO DE BLACK FRIDAY
+            </div>
+            <main className="relative z-10 flex-1">{children}</main>
+            <AudioPlayer />
           </div>
-          <main>{children}</main>
-          <AudioPlayer />
         </SoundProvider>
         <Toaster />
       </body>

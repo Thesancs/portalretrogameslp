@@ -1,14 +1,18 @@
-
 'use client';
 
 import { useContext, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { MoveDownIcon } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@/components/app/pixel-art-icons';
 import { SoundContext } from '@/context/sound-context';
 import { usePathname } from 'next/navigation';
 
-const SoundToggle = () => {
+type Orientation = 'vertical' | 'horizontal';
+
+interface SoundToggleProps {
+  orientation?: Orientation;
+}
+
+const SoundToggle = ({ orientation = 'vertical' }: SoundToggleProps) => {
   const soundContext = useContext(SoundContext);
   const pathname = usePathname();
 
@@ -19,50 +23,57 @@ const SoundToggle = () => {
   if (!soundContext) {
     return null;
   }
-  
-  // Only show on the homepage, or when music is already playing on other pages
+
   if (pathname !== '/' && !soundContext.isSoundOn) {
     return null;
   }
-  
+
+  const content = (
+    <button
+      type="button"
+      onClick={() => soundContext.toggleSound()}
+      className="btn-pixel-accent glow-ring flex items-center gap-3 rounded-full !px-6 !py-3 text-xs font-semibold uppercase tracking-[0.35em] sm:gap-4"
+    >
+      {soundContext.isSoundOn ? (
+        <SpeakerLoudIcon className="h-6 w-6" />
+      ) : (
+        <SpeakerOffIcon className="h-6 w-6" />
+      )}
+      <span>{soundContext.isSoundOn ? 'Som ligado' : 'Ligar som'}</span>
+    </button>
+  );
+
   if (pathname !== '/') {
-      return (
-         <Button
-            onClick={() => soundContext.toggleSound()}
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            {soundContext.isSoundOn ? (
-              <SpeakerLoudIcon className="h-6 w-6 text-primary" />
-            ) : (
-              <SpeakerOffIcon className="h-6 w-6" />
-            )}
-            <span className='sr-only'>Toggle Sound</span>
-          </Button>
-      )
+    return content;
   }
 
-  const { isSoundOn, toggleSound } = soundContext;
-  
+  if (orientation === 'horizontal') {
+    return (
+      <div className="retro-panel w-full max-w-xl rounded-3xl px-5 py-4 sm:px-6">
+        <div className="retro-panel-content flex flex-col items-center gap-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="flex items-center gap-4">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/40 bg-background/70">
+              <Sparkles className="h-5 w-5 text-primary" />
+            </span>
+            <div className="space-y-1 text-left text-[10px] uppercase tracking-[0.35em] text-muted-foreground sm:text-xs">
+              <p>Passo 01</p>
+              <p>Ative a trilha nostalgica</p>
+            </div>
+          </div>
+          {content}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center gap-2">
-      <Button
-        onClick={() => toggleSound()}
-        variant="ghost"
-        size="lg"
-        className="flex items-center gap-4 text-muted-foreground hover:text-foreground p-4 rounded-lg animate-glow"
-      >
-        {isSoundOn ? (
-          <SpeakerLoudIcon className="h-8 w-8 text-primary" />
-        ) : (
-          <SpeakerOffIcon className="h-8 w-8" />
-        )}
-        <span className='font-body text-lg'>{isSoundOn ? 'Som Ligado' : 'Ligar Som'}</span>
-      </Button>
-      <div className="flex flex-col items-center gap-2 text-muted-foreground">
-        <MoveDownIcon className="h-5 w-5 animate-pulse" />
-        <span className='font-pixel'>Ligue o som aqui</span>
+    <div className="flex flex-col items-center gap-4 text-center">
+      <div className="retro-panel-content flex flex-col items-center gap-3">
+        <span className="retro-badge">Passo 01</span>
+        <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+          Ative a trilha nostalgica
+        </p>
+        {content}
       </div>
     </div>
   );
