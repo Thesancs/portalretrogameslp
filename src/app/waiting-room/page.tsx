@@ -13,7 +13,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const waitingRoomImage = PlaceHolderImages.find(p => p.id === 'waiting-room-gif')!;
 
 export default function WaitingRoomPage() {
-  const [position, setPosition] = useState(3127);
+  const [position, setPosition] = useState(3452);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
@@ -23,23 +23,30 @@ export default function WaitingRoomPage() {
       soundContext.playSound();
     }
 
-    const startValue = 3127;
+    const startValue = 3452;
     const duration = 5000; // 5 seconds
-    const intervalTime = 50; // update every 50ms
-    const steps = duration / intervalTime;
-    const decrement = startValue / steps;
+    const intervalTime = 100; // update every 100ms
+    
+    let remainingValue = startValue;
 
     const positionInterval = setInterval(() => {
-      setPosition(prev => {
-        const newPosition = prev - decrement;
-        if (newPosition <= 0) {
-          clearInterval(positionInterval);
+        if (remainingValue <= 0) {
+          setPosition(0);
           setShowButton(true);
-          return 0;
+          clearInterval(positionInterval);
+          return;
         }
-        return Math.floor(newPosition);
-      });
+
+        // Calculate a random decrement, making it larger as we get closer to the end
+        const progress = (startValue - remainingValue) / startValue;
+        const randomFactor = Math.random() * (200 + progress * 800); // Jumps get bigger
+        const decrement = Math.min(remainingValue, Math.floor(randomFactor));
+        
+        remainingValue -= decrement;
+        setPosition(remainingValue);
+
     }, intervalTime);
+
 
     return () => {
       clearInterval(positionInterval);
