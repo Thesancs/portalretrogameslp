@@ -15,12 +15,26 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, A
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import * as Tone from 'tone';
 import { SoundContext } from '@/context/sound-context';
+import { Home, Users, Video } from 'lucide-react';
 
 const quizImage = PlaceHolderImages.find(p => p.id === 'quiz-game-scene')!;
 const snesImage = PlaceHolderImages.find(p => p.id === 'console-snes')!;
 const ps1Image = PlaceHolderImages.find(p => p.id === 'console-ps1')!;
 const n64Image = PlaceHolderImages.find(p => p.id === 'console-n64')!;
 const megaDriveImage = PlaceHolderImages.find(p => p.id === 'console-megadrive')!;
+
+function ArcadeIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <rect x="2" y="6" width="20" height="16" rx="2" />
+            <rect x="6" y="10" width="12" height="6" />
+            <path d="M12 10V6" />
+            <path d="M10 6h4" />
+            <path d="M8 18h2" />
+            <path d="M14 18h2" />
+        </svg>
+    )
+}
 
 const quizSteps = [
   {
@@ -42,17 +56,32 @@ const quizSteps = [
   {
     question: "Onde você mais jogava?",
     type: "radio",
-    options: ["Em casa, no meu console", "Na casa de um amigo ou vizinho", "Em uma locadora", "Fliperamas/Arcades"]
+    options: [
+      { label: "Em casa, no meu console", icon: Home },
+      { label: "Na casa de um amigo ou vizinho", icon: Users },
+      { label: "Em uma locadora", icon: Video },
+      { label: "Fliperamas/Arcades", icon: ArcadeIcon }
+    ]
   },
   {
     question: "O que mais te deixava na pilha?",
     type: "radio",
-    options: ["Finalmente zerar o jogo", "Descobrir um segredo/easter egg", "Jogar multiplayer com amigos", "Superar um chefe impossível"]
+    options: [
+        { label: "Finalmente zerar o jogo" },
+        { label: "Descobrir um segredo/easter egg" },
+        { label: "Jogar multiplayer com amigos" },
+        { label: "Superar um chefe impossível" }
+    ]
   },
   {
     question: "Com quem você gostaria de reviver esses momentos?",
     type: "radio",
-    options: ["Sozinho, no meu ritmo", "Com amigos da antiga", "Com minha família/parceiro(a)", "Com a comunidade online"]
+    options: [
+        { label: "Sozinho, no meu ritmo" },
+        { label: "Com amigos da antiga" },
+        { label: "Com minha família/parceiro(a)" },
+        { label: "Com a comunidade online" }
+    ]
   }
 ];
 
@@ -203,19 +232,20 @@ export default function QuizPage() {
                     />
                     <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 w-full">
                       {currentStep.options?.map(opt => {
+                        const optionLabel = typeof opt === 'string' ? opt : (opt as {label: string}).label;
                         return (
                            <Label 
-                            key={opt as string} 
-                            htmlFor={opt as string} 
+                            key={optionLabel} 
+                            htmlFor={optionLabel} 
                             className={cn(
                               "btn-pixel !font-body !text-base !font-normal !normal-case tracking-normal text-center justify-center",
                               {
-                                "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === opt
+                                "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === optionLabel
                               }
                             )}
                           >
-                            <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
-                            <span>{opt as string}</span>
+                            <RadioGroupItem value={optionLabel} id={optionLabel} className="sr-only" onClick={() => handleAnswerSelection(optionLabel)} />
+                            <span>{optionLabel}</span>
                            </Label>
                         )
                       })}
@@ -253,21 +283,27 @@ export default function QuizPage() {
                 )}
                 {currentStep.type === 'radio' && (
                   <RadioGroup onValueChange={handleAnswerSelection} value={answers[step]} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentStep.options?.map(opt => (
-                       <Label 
-                        key={opt as string} 
-                        htmlFor={opt as string} 
-                        className={cn(
-                           "btn-pixel !font-body !text-sm !font-normal !normal-case tracking-normal text-center justify-center",
-                           {
-                                "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === opt
-                           }
-                        )}
-                       >
-                         <RadioGroupItem value={opt as string} id={opt as string} className="sr-only" onClick={() => handleAnswerSelection(opt as string)} />
-                         <span>{opt as string}</span>
-                       </Label>
-                    ))}
+                    {currentStep.options?.map(opt => {
+                        const optionLabel = typeof opt === 'string' ? opt : (opt as {label: string}).label;
+                        const Icon = (opt as {icon?: React.ComponentType<any>}).icon;
+
+                        return (
+                           <Label 
+                            key={optionLabel} 
+                            htmlFor={optionLabel} 
+                            className={cn(
+                               "btn-pixel !font-body !text-sm !font-normal !normal-case tracking-normal text-center justify-center !flex-col !h-24",
+                               {
+                                   "!bg-primary !text-primary-foreground !translate-y-0 !shadow-[inset_-2px_-2px_0px_0px_hsl(var(--foreground)_/_0.2)]": answers[step] === optionLabel
+                               }
+                            )}
+                           >
+                             <RadioGroupItem value={optionLabel} id={optionLabel} className="sr-only" onClick={() => handleAnswerSelection(optionLabel)} />
+                             {Icon && <Icon className="h-6 w-6 mb-2" />}
+                             <span>{optionLabel}</span>
+                           </Label>
+                        )
+                    })}
                   </RadioGroup>
                 )}
               </div>
