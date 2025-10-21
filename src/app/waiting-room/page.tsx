@@ -75,6 +75,7 @@ export default function WaitingRoomPage() {
 
 
   const handleEnterPortal = () => {
+    soundContext?.playSound('quiz_start');
     router.push('/quiz');
   };
 
