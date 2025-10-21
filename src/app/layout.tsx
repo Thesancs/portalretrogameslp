@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <SoundProvider>
           <Header />
-          <div className="py-4 text-center">
+          <div className="pt-24 pb-4 text-center">
              <SoundToggle />
           </div>
           <main>{children}</main>
