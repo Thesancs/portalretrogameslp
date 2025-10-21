@@ -15,7 +15,7 @@
     {
       "id": "sales-gameplay-2",
       "description": "Gameplay footage from an arcade game.",
-      "imageUrl": "https://images.unsplash.com/photo-1533236098109-273df099b421?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcmNhZGUlMjBnYW1lfGVufDB8fHx8MTc2MDc0MTIzOXww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1533236098109-273df099b421?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcmNhZGUlMjBnYW1lfGVufDB8fHx8MTc2MDc0MTIzOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "arcade game"
     },
     {
@@ -63,7 +63,7 @@
     {
       "id": "console-ps1",
       "description": "Original Sony PlayStation 1 console",
-      "imageUrl": "https://images.unsplash.com/photo-1554982635-4fac06598444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwbGF5c3RhdGlvbiUyMDElMjBjb25zb2xlfGVufDB8fHx8MTc2MDk0ODkwOXww&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1554982635-4fac06598444?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwbGF5c3RhdGlvbiUyMDElMjBjb25zb2xlfGVufDB8fHx8MTc2MDk0ODkwOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "playstation console"
     },
     {
@@ -77,6 +77,12 @@
       "description": "Sega Mega Drive / Genesis console",
       "imageUrl": "https://images.unsplash.com/photo-1611956417584-358b543c7b4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzZWdhJTIwbWVnYSUyMGRyaXZlfGVufDB8fHx8MTc2MDk0ODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "sega megadrive"
+    },
+    {
+      "id": "waiting-room-gif",
+      "description": "An animated gif of a classic game character.",
+      "imageUrl": "/image/gif-portal-2.gif",
+      "imageHint": "animated character gif"
     }
   ]
 }

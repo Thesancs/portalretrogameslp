@@ -3,10 +3,14 @@
 
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { SoundContext } from '@/context/sound-context';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+
+const waitingRoomImage = PlaceHolderImages.find(p => p.id === 'waiting-room-gif')!;
 
 export default function WaitingRoomPage() {
   const [position, setPosition] = useState(3127);
@@ -56,19 +60,29 @@ export default function WaitingRoomPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
+              <div className="flex justify-center mb-4">
+                <Image 
+                  src={waitingRoomImage.imageUrl} 
+                  alt={waitingRoomImage.description}
+                  data-ai-hint={waitingRoomImage.imageHint}
+                  width={150} 
+                  height={150} 
+                  unoptimized
+                />
+              </div>
               <h2 className="text-2xl md:text-3xl font-headline text-primary text-glow mb-4">
-                🍄✨ "A Jornada Começa..."
+                🍄✨ "A Jornada Começa Agora..."
               </h2>
 
               <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
-                <p>🎵 Eu sei que tirei um sorriso seu...</p>
-                <p>Esse som... essa melodia...<br />Já te teleportou pra outro mundo, mesmo sentado no chão da sala.</p>
+                <p> Eu sei que tirei um sorriso seu...</p>
+                <p>Prepare-se para retornar a sua infancia<br />Já te teleportou pra outro mundo, mesmo sentado no chão da sala.</p>
                 <p>Hoje, ela volta.<br />Não pra te entreter.<br />Mas pra te lembrar de quem você era quando tudo era simples, divertido e mágico.</p>
               </div>
 
               <div className="my-8 p-4 bg-muted/50 rounded-lg border border-dashed border-accent/50 space-y-4">
                 <p className="text-lg font-semibold text-accent">
-                  🟨 Você está na fila para acessar o Portal Gamer do Passado™
+                   Você está na fila para acessar o PORTAL RETRÔ GAMES™
                 </p>
                 <div className='flex items-center justify-center gap-4 text-2xl font-pixel'>
                     <div className="loader"></div>
