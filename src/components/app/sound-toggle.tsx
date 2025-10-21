@@ -3,7 +3,7 @@
 
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button';
-import { MoveRightIcon } from 'lucide-react';
+import { MoveDownIcon } from 'lucide-react';
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@/components/app/pixel-art-icons';
 import { SoundContext } from '@/context/sound-context';
 import { usePathname } from 'next/navigation';
@@ -44,10 +44,6 @@ const SoundToggle = () => {
   
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <span className='font-pixel'>Ligue o som aqui</span>
-        <MoveRightIcon className="h-5 w-5 animate-pulse" />
-      </div>
       <Button
         onClick={toggleSound}
         variant="ghost"
@@ -61,6 +57,10 @@ const SoundToggle = () => {
         )}
         <span className='font-body text-lg'>{isSoundOn ? 'Desligar Som' : 'Ligar Som'}</span>
       </Button>
+      <div className="flex flex-col items-center gap-2 text-muted-foreground">
+        <MoveDownIcon className="h-5 w-5 animate-pulse" />
+        <span className='font-pixel'>Ligue o som aqui</span>
+      </div>
     </div>
   );
 };
