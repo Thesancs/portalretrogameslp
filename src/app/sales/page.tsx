@@ -1,11 +1,24 @@
+
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { ControllerIcon, ConsoleIcon, JoystickIcon } from '@/components/app/pixel-art-icons';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Autoplay from "embla-carousel-autoplay";
 
-const gameplayImages = PlaceHolderImages.filter(p => p.id.startsWith('sales-gameplay'));
+const gameIcons = [
+    { src: '/image/icons/gow-icon.png', alt: 'God of War icon' },
+    { src: '/image/icons/gta-icon.png', alt: 'GTA icon' },
+    { src: '/image/icons/mk-1-icon.png', alt: 'Mortal Kombat 1 icon' },
+    { src: '/image/icons/resident-evil-icon.png', alt: 'Resident Evil icon' },
+    { src: '/image/icons/street fighter-icon.png', alt: 'Street Fighter icon' },
+    { src: '/image/icons/tekken-icon.png', alt: 'Tekken icon' },
+    { src: '/image/icons/top-gear-icon.png', alt: 'Top Gear icon' },
+];
 
 const features = [
   { text: "+100.000 jogos clássicos", icon: ControllerIcon },
@@ -15,6 +28,8 @@ const features = [
 ];
 
 export default function SalesPage() {
+  const autoplayPlugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
+
   return (
     
       <div className="container mx-auto px-4 py-8 min-h-[calc(100vh-128px)]">
@@ -30,21 +45,31 @@ export default function SalesPage() {
           </section>
 
           {/* Gameplay Gallery */}
-          <section>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {gameplayImages.map((img, index) => (
-                <div key={img.id} className="overflow-hidden rounded-lg border-4 border-secondary hover:border-primary transition-all duration-300 shadow-lg">
-                  <Image
-                    src={img.imageUrl}
-                    alt={img.description}
-                    data-ai-hint={img.imageHint}
-                    width={300}
-                    height={200}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+          <section className="w-full max-w-4xl mx-auto py-8">
+            <Carousel
+                plugins={[autoplayPlugin.current]}
+                opts={{
+                    align: "start",
+                    loop: true,
+                }}
+                className="w-full"
+            >
+                <CarouselContent className="-ml-2">
+                    {gameIcons.map((icon, index) => (
+                        <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 pl-2">
+                            <div className="p-1 flex justify-center items-center">
+                                <Image 
+                                  src={icon.src}
+                                  alt={icon.alt}
+                                  width={100}
+                                  height={100}
+                                  className="object-contain"
+                                />
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
           </section>
 
           {/* Offer Section */}
