@@ -56,7 +56,7 @@ export default function SalesPage() {
             >
                 <CarouselContent className="-ml-2">
                     {gameIcons.map((icon, index) => (
-                        <CarouselItem key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 pl-2">
+                        <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 pl-2">
                             <div className="p-1 flex justify-center items-center">
                                 <Image 
                                   src={icon.src}
