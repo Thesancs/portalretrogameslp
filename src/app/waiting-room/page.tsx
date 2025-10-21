@@ -13,7 +13,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const waitingRoomImage = PlaceHolderImages.find(p => p.id === 'waiting-room-gif')!;
 
 export default function WaitingRoomPage() {
-  const [position, setPosition] = useState(3452);
+  const [position, setPosition] = useState(3456);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
@@ -23,8 +23,8 @@ export default function WaitingRoomPage() {
       soundContext.playSound();
     }
 
-    const startValue = 3452;
-    const duration = 8000; // 8 seconds
+    const startValue = 3456;
+    const duration = 10000; // 10 seconds
     const intervalTime = 100; // update every 100ms
     
     let remainingValue = startValue;
