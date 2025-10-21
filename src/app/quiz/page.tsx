@@ -166,7 +166,10 @@ export default function QuizPage() {
     
     <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-128px)]">
       <Card className={cn("w-full max-w-2xl overflow-hidden", { "animate-flash-red": !!animatingOption && !isBonusModalOpen })}>
-        <CardHeader className="text-center">
+        <CardHeader className="text-center relative">
+          <div className="absolute top-4 right-6 font-pixel text-primary text-glow">
+              Score: {score}
+          </div>
           <p className="font-pixel text-primary text-sm">QUIZ NOSTÁLGICO</p>
           <CardTitle className="text-2xl md:text-3xl font-bold">
             {currentStep.question}
@@ -274,9 +277,6 @@ export default function QuizPage() {
           <Button variant="outline" onClick={handleBack} disabled={step === 0}>
             Voltar
           </Button>
-          <div className="font-pixel text-primary text-glow">
-              Score: {score}
-          </div>
           <div className='w-24 text-right'>
              {step === quizSteps.length - 1 && (
                 <Button onClick={handleNext} disabled={!answers[step]}>
