@@ -88,13 +88,13 @@ export default function WaitingRoomPage() {
                   src={waitingRoomImage.imageUrl} 
                   alt={waitingRoomImage.description}
                   data-ai-hint={waitingRoomImage.imageHint}
-                  width={250} 
-                  height={250} 
+                  width={300} 
+                  height={300} 
                   unoptimized
                 />
               </div>
               <h2 className="text-2xl md:text-3xl font-headline text-primary text-glow mb-4">
-                🍄✨ "A Jornada Começa Agora..."
+                "A JORNADA COMEÇA AGORA..."
               </h2>
 
               <div className="text-lg text-foreground/90 space-y-3 prose prose-invert prose-p:my-2 mx-auto">
