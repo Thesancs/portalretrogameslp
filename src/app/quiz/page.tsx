@@ -66,36 +66,38 @@ export default function QuizPage() {
   const [isBonusModalOpen, setIsBonusModalOpen] = useState(false);
   const router = useRouter();
   const soundContext = useContext(SoundContext);
-
-  const initializeQuizAudio = useCallback(async () => {
-    if (selectionSynth) return;
-    
-    if (soundContext && !soundContext.isInitialized) {
-      await soundContext.initializeAudio();
-    }
-    
-    selectionSynth = new Tone.Synth({
-      oscillator: {
-        type: 'sine',
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.1,
-        release: 0.2,
-      },
-    }).toDestination();
-    
-  }, [soundContext]);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
   useEffect(() => {
+    const initializeQuizAudio = async () => {
+        if (isAudioInitialized || !soundContext) return;
+        
+        await soundContext.initializeAudio();
+        
+        if (Tone.context.state !== 'running') {
+            await Tone.start();
+        }
+
+        selectionSynth = new Tone.Synth({
+          oscillator: {
+            type: 'sine',
+          },
+          envelope: {
+            attack: 0.01,
+            decay: 0.2,
+            sustain: 0.1,
+            release: 0.2,
+          },
+        }).toDestination();
+        setIsAudioInitialized(true);
+    };
+
     initializeQuizAudio();
 
     return () => {
       selectionSynth?.dispose();
-      selectionSynth = undefined!;
     };
-  }, [initializeQuizAudio]);
+  }, [soundContext, isAudioInitialized]);
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {
@@ -133,7 +135,11 @@ export default function QuizPage() {
     }
 
     if (soundContext?.isSoundOn && selectionSynth) {
-      selectionSynth.triggerAttackRelease('C5', '16n');
+      try {
+        selectionSynth.triggerAttackRelease('C5', '16n');
+      } catch (error) {
+        console.error("Synth trigger failed:", error);
+      }
     }
 
     setAnswer(step, value);
@@ -299,5 +305,3 @@ export default function QuizPage() {
     
   );
 }
-
-    

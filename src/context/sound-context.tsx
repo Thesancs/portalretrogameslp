@@ -7,6 +7,7 @@ interface SoundContextType {
   isSoundOn: boolean;
   toggleSound: () => void;
   playSound: () => void;
+  stopSound: () => void;
   isInitialized: boolean;
   initializeAudio: () => Promise<void>;
   audioRef: RefObject<HTMLAudioElement> | null;
@@ -21,44 +22,53 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
 
   const initializeAudio = useCallback(async () => {
     if (isInitialized) return;
-    if (audioRef.current) {
-        audioRef.current.volume = 0.3; // Set a default volume
+    try {
+        if (audioRef.current) {
+            await audioRef.current.play();
+            audioRef.current.pause();
+            audioRef.current.volume = 0.3;
+        }
+        setIsInitialized(true);
+    } catch (e) {
+        // Autoplay was prevented.
+        console.log("Audio initialization requires user interaction.");
     }
-    setIsInitialized(true);
-    console.log("Audio Player Initialized");
   }, [isInitialized]);
 
   const playSound = useCallback(async () => {
-    await initializeAudio();
-    if (audioRef.current) {
-      try {
+    if (!audioRef.current) return;
+    try {
         await audioRef.current.play();
         setIsSoundOn(true);
-      } catch (error) {
+    } catch (error) {
         console.error("Audio play failed:", error);
-      }
-    }
-  }, [initializeAudio]);
-
-  const toggleSound = async () => {
-    if (!isInitialized) {
-      await playSound();
-      return;
-    }
-
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        await audioRef.current.play();
-        setIsSoundOn(true);
-      } else {
-        audioRef.current.pause();
         setIsSoundOn(false);
-      }
     }
-  };
+  }, []);
+
+  const stopSound = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsSoundOn(false);
+    }
+  }, []);
+
+  const toggleSound = useCallback(async () => {
+    if (!isInitialized) {
+      await initializeAudio();
+    }
+    
+    if (audioRef.current) {
+        if (audioRef.current.paused) {
+            await playSound();
+        } else {
+            stopSound();
+        }
+    }
+  }, [isInitialized, initializeAudio, playSound, stopSound]);
   
   return (
-    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, isInitialized, initializeAudio, audioRef }}>
+    <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, stopSound, isInitialized, initializeAudio, audioRef }}>
       {children}
     </SoundContext.Provider>
   );

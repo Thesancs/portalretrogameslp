@@ -20,9 +20,11 @@ export default function WaitingRoomPage() {
 
   useEffect(() => {
     if (soundContext && !soundContext.isSoundOn) {
-      soundContext.playSound();
+      soundContext.toggleSound();
     }
+  }, [soundContext]);
 
+  useEffect(() => {
     if (status !== 'counting') return;
 
     const startValue = 3426;
@@ -57,7 +59,7 @@ export default function WaitingRoomPage() {
     return () => {
       clearInterval(positionInterval);
     };
-  }, [soundContext, status]);
+  }, [status]);
 
   useEffect(() => {
     if (status === 'releasing') {
@@ -88,8 +90,8 @@ export default function WaitingRoomPage() {
                   src={waitingRoomImage.imageUrl} 
                   alt={waitingRoomImage.description}
                   data-ai-hint={waitingRoomImage.imageHint}
-                  width={300} 
-                  height={300} 
+                  width={250} 
+                  height={250} 
                   unoptimized
                 />
               </div>
