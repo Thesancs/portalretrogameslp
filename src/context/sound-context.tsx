@@ -2,7 +2,6 @@
 'use client';
 
 import { createContext, useState, useCallback, ReactNode, useRef, RefObject, useEffect } from 'react';
-import * as Tone from 'tone';
 
 type SoundType = 'background' | 'waiting' | 'coin';
 
@@ -29,8 +28,10 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const initializeAudio = useCallback(async () => {
-    if (isInitialized) return;
+    if (typeof window === 'undefined' || isInitialized) return;
+
     try {
+        const Tone = (await import('tone')).default;
         await Tone.start();
         
         // Set volumes
@@ -39,12 +40,14 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
 
         setIsInitialized(true);
+        console.log("Audio context initialized.");
     } catch (error) {
         console.error("Failed to initialize audio:", error);
     }
-  }, [isInitialized, audioRefs.background, audioRefs.waiting, audioRefs.coin]);
+  }, [isInitialized]);
 
   useEffect(() => {
+    // Automatically initialize audio for desktop users. Mobile requires a user gesture.
     if (!isInitialized) {
         initializeAudio();
     }
@@ -52,6 +55,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
 
   const playSound = useCallback(async (soundType: SoundType) => {
     if (!isInitialized) await initializeAudio();
+    if (!isInitialized) return; // a second check in case initialization fails
     
     const audioRef = audioRefs[soundType];
 
@@ -74,7 +78,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         console.error(`Audio play failed for ${soundType}:`, error);
         if(soundType !== 'coin') setIsSoundOn(false);
     }
-  }, [isInitialized, initializeAudio, audioRefs]);
+  }, [isInitialized, initializeAudio]);
 
   const stopSound = useCallback((soundType?: SoundType) => {
     const stop = (ref: RefObject<HTMLAudioElement> | null) => {
@@ -97,7 +101,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         setIsSoundOn(false);
     }
 
-  }, [audioRefs]);
+  }, []);
 
   const toggleSound = useCallback(async (soundType: SoundType = 'background') => {
     if (!isInitialized) {
@@ -105,18 +109,16 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
       // Need a slight delay to ensure Tone.start() has completed
       await new Promise(resolve => setTimeout(resolve, 100));
     }
-    
-    const audioRef = audioRefs[soundType];
-    if (audioRef?.current) {
-        const isAnyLoopingSoundOn = audioRefs.background.current?.paused === false || audioRefs.waiting.current?.paused === false;
+    if (!isInitialized) return;
 
-        if (isAnyLoopingSoundOn) {
-            stopSound();
-        } else {
-            await playSound(soundType);
-        }
+    const isAnyLoopingSoundOn = audioRefs.background.current?.paused === false || audioRefs.waiting.current?.paused === false;
+
+    if (isAnyLoopingSoundOn) {
+        stopSound();
+    } else {
+        await playSound(soundType);
     }
-  }, [isInitialized, initializeAudio, playSound, stopSound, audioRefs]);
+  }, [isInitialized, initializeAudio, playSound, stopSound]);
   
   return (
     <SoundContext.Provider value={{ isSoundOn, toggleSound, playSound, stopSound, isInitialized, initializeAudio, audioRefs }}>
