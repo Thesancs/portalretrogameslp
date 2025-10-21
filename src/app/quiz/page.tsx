@@ -98,10 +98,10 @@ export default function QuizPage() {
   }, [soundContext]);
 
   useEffect(() => {
-    if (step === 0 && soundContext?.isSoundOn) {
+    if (step === 0 && soundContext?.isInitialized) {
       soundContext.playSound('quiz_start');
     }
-  }, [step, soundContext]);
+  }, [step, soundContext?.isInitialized]);
 
   const handleNext = () => {
     if (step < quizSteps.length - 1) {

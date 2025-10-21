@@ -75,7 +75,9 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         }
         audioRef.current.currentTime = 0;
         await audioRef.current.play();
-        setIsSoundOn(true);
+        if(soundType !== 'coin' && soundType !== 'quiz_start') {
+          setIsSoundOn(true);
+        }
     } catch (error) {
         console.error(`Audio play failed for ${soundType}:`, error);
         if(soundType !== 'coin' && soundType !== 'quiz_start') setIsSoundOn(false);
