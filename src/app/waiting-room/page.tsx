@@ -75,8 +75,21 @@ export default function WaitingRoomPage() {
 
 
   const handleEnterPortal = () => {
-    soundContext?.playSound('quiz_start');
-    router.push('/quiz');
+    if (soundContext?.audioRefs.quiz_start?.current) {
+        soundContext?.playSound('quiz_start');
+        
+        const audio = soundContext.audioRefs.quiz_start.current;
+
+        const onSoundEnd = () => {
+            router.push('/quiz');
+            audio.removeEventListener('ended', onSoundEnd);
+        };
+        
+        audio.addEventListener('ended', onSoundEnd);
+    } else {
+        // Fallback if audio isn't ready for some reason
+        router.push('/quiz');
+    }
   };
 
   return (
