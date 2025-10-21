@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className="py-4 bg-card/80 border-b border-white/10 fixed top-0 z-50 w-full backdrop-blur-sm">
+    <header className="py-4 bg-card border-b border-white/10 w-full">
       <div className="container mx-auto flex flex-col items-center justify-center">
         <Link href="/">
           <Image

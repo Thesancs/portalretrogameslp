@@ -27,10 +27,10 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <SoundProvider>
           <Header />
-          <div className="bg-primary text-primary-foreground font-pixel text-center py-2 text-sm fixed top-[60px] w-full z-40 animate-pulse">
+          <div className="bg-primary text-primary-foreground font-pixel text-center py-2 text-sm w-full z-40 animate-pulse">
             APROVEITE AGORA NOSSO DESCONTO DE BLACK FRIDAY
           </div>
-          <div className="pt-28 pb-4 text-center">
+          <div className="pt-8 pb-4 text-center">
              <SoundToggle />
           </div>
           <main className="pt-4">{children}</main>
