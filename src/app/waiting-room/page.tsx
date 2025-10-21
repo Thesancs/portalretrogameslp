@@ -24,13 +24,16 @@ export default function WaitingRoomPage() {
     }
 
     const startValue = 3452;
-    const duration = 5000; // 5 seconds
+    const duration = 10000; // 10 seconds
     const intervalTime = 100; // update every 100ms
     
     let remainingValue = startValue;
+    let startTime = Date.now();
 
     const positionInterval = setInterval(() => {
-        if (remainingValue <= 0) {
+        const elapsedTime = Date.now() - startTime;
+        
+        if (elapsedTime >= duration) {
           setPosition(0);
           setShowButton(true);
           clearInterval(positionInterval);
@@ -38,11 +41,12 @@ export default function WaitingRoomPage() {
         }
 
         // Calculate a random decrement, making it larger as we get closer to the end
-        const progress = (startValue - remainingValue) / startValue;
-        const randomFactor = Math.random() * (200 + progress * 800); // Jumps get bigger
+        const progress = elapsedTime / duration;
+        const randomFactor = Math.random() * (20 + progress * 200); // Jumps get bigger
         const decrement = Math.min(remainingValue, Math.floor(randomFactor));
         
-        remainingValue -= decrement;
+        const newPosition = remainingValue - decrement;
+        remainingValue = newPosition > 0 ? newPosition : 0;
         setPosition(remainingValue);
 
     }, intervalTime);
