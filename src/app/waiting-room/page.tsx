@@ -24,7 +24,7 @@ export default function WaitingRoomPage() {
     }
 
     const startValue = 3452;
-    const duration = 10000; // 10 seconds
+    const duration = 8000; // 8 seconds
     const intervalTime = 100; // update every 100ms
     
     let remainingValue = startValue;
