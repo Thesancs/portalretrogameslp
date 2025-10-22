@@ -41,22 +41,38 @@ export default function EntryPage() {
           <div className="retro-panel grid-overlay p-3 sm:p-5">
             <div className="retro-panel-content">
               <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-                {entryImages.map((image, index) => (
-                  <div
-                    key={image.id}
-                    className="relative overflow-hidden rounded-2xl border border-primary/20 bg-black/40 shadow-[0_12px_30px_rgba(0,0,0,0.45)] transition duration-500 hover:border-primary/60 hover:shadow-[0_22px_48px_rgba(0,0,0,0.45)]"
-                    style={{ animationDelay: `${index * 150}ms` }}
-                  >
-                    <Image
-                      src={image.imageUrl}
-                      alt={image.description}
-                      data-ai-hint={image.imageHint}
-                      width={320}
-                      height={240}
-                      className="h-full w-full rounded-2xl object-cover"
-                    />
-                  </div>
-                ))}
+                {entryImages.map((image, index) => {
+                  const isVideo = image.imageUrl.endsWith('.webm');
+                  return (
+                    <div
+                      key={image.id}
+                      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-black/40 shadow-[0_12px_30px_rgba(0,0,0,0.45)] transition duration-500 hover:border-primary/60 hover:shadow-[0_22px_48px_rgba(0,0,0,0.45)]"
+                      style={{ animationDelay: `${index * 150}ms` }}
+                    >
+                      {isVideo ? (
+                        <video
+                          src={image.imageUrl}
+                          aria-label={image.description}
+                          data-ai-hint={image.imageHint}
+                          className="h-full w-full rounded-2xl object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        />
+                      ) : (
+                        <Image
+                          src={image.imageUrl}
+                          alt={image.description}
+                          data-ai-hint={image.imageHint}
+                          width={320}
+                          height={240}
+                          className="h-full w-full rounded-2xl object-cover"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -80,9 +96,9 @@ export default function EntryPage() {
                 <div className="retro-panel p-4 sm:p-5">
                   <div className="retro-panel-content grid gap-4 text-center sm:grid-cols-3 sm:gap-6">
                     {timeline.map(step => (
-                      <div key={step.label} className="flex flex-col items-center gap-3">
+                      <div key={step.label} className="flex flex-col items-center gap-3 text-center">
                         <span className="retro-badge">{step.label}</span>
-                        <p className="max-w-xs text-xs text-muted-foreground/80">{step.text}</p>
+                        <p className="max-w-xs text-xs text-muted-foreground/80 sm:text-sm">{step.text}</p>
                       </div>
                     ))}
                   </div>
@@ -102,7 +118,7 @@ export default function EntryPage() {
                       key={item.title}
                       className="group flex flex-col gap-2 rounded-xl border border-primary/20 bg-secondary/40 p-4 backdrop-blur-lg transition hover:border-primary/50"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+                      <span className="text-xs font-semibold uppercase tracking-[0.25em] text-primary sm:tracking-[0.35em]">
                         {item.title}
                       </span>
                       <p className="text-sm text-muted-foreground/90">{item.description}</p>

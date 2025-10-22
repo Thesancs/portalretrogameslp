@@ -8,20 +8,24 @@ const sourceManifests = [
   { from: path.join(projectRoot, '.next', 'server', 'pages-manifest.json'), to: 'pages-manifest.json' },
   { from: path.join(projectRoot, '.next', 'server', 'next-font-manifest.json'), to: 'next-font-manifest.json' },
 ];
-const targetDir = path.join(projectRoot, '.next', 'server', 'pages', '_app');
+const targetDirs = [
+  path.join(projectRoot, '.next', 'server', 'pages', '_app'),
+  path.join(projectRoot, '.next', 'server', 'app', 'page'),
+];
 
 function copyManifest() {
-  fs.mkdirSync(targetDir, { recursive: true });
+  targetDirs.forEach(targetDir => {
+    fs.mkdirSync(targetDir, { recursive: true });
 
-  sourceManifests.forEach(({ from, to }) => {
-    if (!fs.existsSync(from)) {
-      console.warn(`[postbuild] Manifest not found at ${from}`);
-      return;
-    }
-
-    const targetPath = path.join(targetDir, to);
-    fs.copyFileSync(from, targetPath);
-    console.log(`[postbuild] Copied ${path.basename(from)} to ${targetPath}`);
+    sourceManifests.forEach(({ from, to }) => {
+      if (!fs.existsSync(from)) {
+        console.warn(`[postbuild] Manifest not found at ${from}`);
+        return;
+      }
+      const targetPath = path.join(targetDir, to);
+      fs.copyFileSync(from, targetPath);
+      console.log(`[postbuild] Copied ${path.basename(from)} to ${targetPath}`);
+    });
   });
 }
 

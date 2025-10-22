@@ -33,26 +33,26 @@
     {
       "id": "entry-image-1",
       "description": "A character from a pokemon game.",
-      "imageUrl": "/image/gif pokemon fire red.gif",
-      "imageHint": "pokemon gif"
+      "imageUrl": "/image/gif-pokemon-fire-red.webm",
+      "imageHint": "pokemon video"
     },
     {
       "id": "entry-image-2",
       "description": "A character from a classic fighting game.",
-      "imageUrl": "/image/mercadorrse4.gif",
-      "imageHint": "fighting game gif"
+      "imageUrl": "/image/mercadorrse4.webm",
+      "imageHint": "fighting game video"
     },
     {
       "id": "entry-image-3",
       "description": "A scene from a classic fighting game.",
-      "imageUrl": "/image/mortal-kombat.gif",
-      "imageHint": "mortal kombat gif"
+      "imageUrl": "/image/mortal-kombat.webm",
+      "imageHint": "mortal kombat video"
     },
     {
       "id": "entry-image-4",
       "description": "A scene from a classic adventure game.",
-      "imageUrl": "/image/ocarina-of-time-the-legend-of-zelda.gif",
-      "imageHint": "zelda gif"
+      "imageUrl": "/image/ocarina-of-time-the-legend-of-zelda.webm",
+      "imageHint": "zelda video"
     },
     {
       "id": "console-snes",
@@ -81,8 +81,8 @@
     {
       "id": "waiting-room-gif",
       "description": "An animated gif of a classic game character.",
-      "imageUrl": "/image/playstation-playstation2.gif",
-      "imageHint": "playstation gif"
+      "imageUrl": "/image/playstation-playstation2.webm",
+      "imageHint": "playstation video"
     }
   ]
 }

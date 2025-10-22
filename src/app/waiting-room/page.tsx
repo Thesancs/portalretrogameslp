@@ -93,15 +93,30 @@ export default function WaitingRoomPage() {
               <div className="space-y-8 text-left">
                 <div className="relative flex items-center justify-center">
                   <span className="glow-ring absolute inset-8 z-0 opacity-60" />
-                  <Image
-                    src={waitingRoomImage.imageUrl}
-                    alt={waitingRoomImage.description}
-                    data-ai-hint={waitingRoomImage.imageHint}
-                    width={260}
-                    height={260}
-                    unoptimized
-                    className="relative z-10 h-44 w-44 rounded-full border border-primary/40 bg-black/60 object-cover p-2 shadow-[0_25px_65px_rgba(0,0,0,0.45)] floating"
-                  />
+                  {waitingRoomImage.imageUrl.endsWith('.webm') ? (
+                    <video
+                      src={waitingRoomImage.imageUrl}
+                      aria-label={waitingRoomImage.description}
+                      data-ai-hint={waitingRoomImage.imageHint}
+                      width={260}
+                      height={260}
+                      className="relative z-10 h-44 w-44 rounded-full border border-primary/40 bg-black/60 object-cover p-2 shadow-[0_25px_65px_rgba(0,0,0,0.45)] floating"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  ) : (
+                    <Image
+                      src={waitingRoomImage.imageUrl}
+                      alt={waitingRoomImage.description}
+                      data-ai-hint={waitingRoomImage.imageHint}
+                      width={260}
+                      height={260}
+                      unoptimized
+                      className="relative z-10 h-44 w-44 rounded-full border border-primary/40 bg-black/60 object-cover p-2 shadow-[0_25px_65px_rgba(0,0,0,0.45)] floating"
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-4">
@@ -118,15 +133,15 @@ export default function WaitingRoomPage() {
                 <div className="grid gap-4 sm:grid-cols-3">
                   {timeline.map(item => (
                     <div key={item.label} className="rounded-xl border border-primary/20 bg-secondary/40 p-4 text-sm text-muted-foreground/90">
-                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{item.label}</p>
-                      <p className="mt-2">{item.description}</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:tracking-[0.3em]">{item.label}</p>
+                      <p className="mt-2 text-xs sm:text-sm">{item.description}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="space-y-8">
-                <div className="rounded-3xl border border-primary/30 bg-background/70 p-6 backdrop-blur-xl">
+              <div className="space-y-6 sm:space-y-8">
+                <div className="rounded-3xl border border-primary/30 bg-background/70 p-5 sm:p-6 backdrop-blur-xl transition-all">
                   <AnimatePresence mode="wait">
                     {status === 'counting' && (
                       <motion.div
@@ -137,8 +152,8 @@ export default function WaitingRoomPage() {
                         transition={{ duration: 0.35 }}
                         className="space-y-4 text-center"
                       >
-                        <p className="text-sm uppercase tracking-[0.35em] text-accent">Pre-carga da nostalgia</p>
-                        <div className="flex items-center justify-center gap-4 font-pixel text-xl">
+                        <p className="text-xs uppercase tracking-[0.25em] text-accent sm:text-sm sm:tracking-[0.35em]">Pre-carga da nostalgia</p>
+                        <div className="flex items-center justify-center gap-3 font-pixel text-lg sm:gap-4 sm:text-xl">
                           <div className="loader" />
                           <span>
                             Posicao: <span className="text-primary text-glow">{position}</span>
@@ -159,7 +174,7 @@ export default function WaitingRoomPage() {
                         transition={{ duration: 0.4 }}
                         className="space-y-3 text-center"
                       >
-                        <p className="text-sm uppercase tracking-[0.35em] text-accent">Canal liberado</p>
+                        <p className="text-xs uppercase tracking-[0.25em] text-accent sm:text-sm sm:tracking-[0.35em]">Canal liberado</p>
                         <p className="font-semibold text-primary">
                           Aguente firme, preparando o salto temporal...
                         </p>
@@ -174,7 +189,7 @@ export default function WaitingRoomPage() {
                         transition={{ duration: 0.45 }}
                         className="space-y-4 text-center"
                       >
-                        <p className="text-sm uppercase tracking-[0.35em] text-primary">Portal estavel</p>
+                        <p className="text-xs uppercase tracking-[0.25em] text-primary sm:text-sm sm:tracking-[0.35em]">Portal estavel</p>
                         <p className="text-muted-foreground">
                           O quiz nostalgico esta pronto. Aperte o botao abaixo e atravesse.
                         </p>
@@ -183,7 +198,7 @@ export default function WaitingRoomPage() {
                   </AnimatePresence>
                 </div>
 
-                <div className="rounded-3xl border border-primary/25 bg-secondary/40 p-6 text-sm text-muted-foreground">
+                <div className="rounded-3xl border border-primary/25 bg-secondary/40 p-5 text-sm text-muted-foreground sm:p-6">
                   <p>
                     Enquanto o portal se abre, deixa a trilha guiar o coracao gamer. O proximo passo e descobrir
                     qual console marcou a sua historia  e destravar a colecao completa pra reviver tudo isso hoje.
@@ -197,13 +212,13 @@ export default function WaitingRoomPage() {
                         initial={{ opacity: 0, scale: 0.85 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.45, delay: 0.2 }}
-                        className="w-full"
+                        className="w-full max-w-lg"
                       >
                         <Button
                           onClick={handleEnterPortal}
-                          className="btn-pixel-accent flex w-full items-center justify-center gap-2 !px-10 !py-5 !text-lg"
+                          className="btn-pixel-accent flex w-full items-center justify-center gap-2 px-6 py-4 text-[13px] leading-tight tracking-[0.04em] text-center sm:px-10 sm:py-5 sm:text-lg sm:tracking-[0.22em]"
                         >
-                          Entrar no portal retro
+                          <span className="block sm:inline">entra no portal</span>
                         </Button>
                       </motion.div>
                     )}

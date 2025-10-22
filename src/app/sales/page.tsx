@@ -167,7 +167,10 @@ export default function SalesPage() {
                   height={44}
                   className="mx-auto h-10 w-auto object-contain"
                 />
-                <Link href="/checkout" className="btn-pixel !px-8 !py-4 !text-base sm:!px-10 sm:!text-lg">
+                <Link
+                  href="/checkout"
+                  className="btn-pixel w-full px-6 py-4 text-sm tracking-[0.12em] sm:w-auto sm:px-10 sm:py-5 sm:text-lg sm:tracking-[0.28em]"
+                >
                   Quero reviver agora
                 </Link>
                 <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">

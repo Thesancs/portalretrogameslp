@@ -41,7 +41,7 @@ export const SoundProvider = ({ children }: { children: ReactNode }) => {
         if(audioRefs.waiting.current) audioRefs.waiting.current.volume = 0.4;
         if(audioRefs.coin.current) audioRefs.coin.current.volume = 0.5;
         if(audioRefs.quiz_start.current) audioRefs.quiz_start.current.volume = 0.5;
-        if(audioRefs.quiz_music.current) audioRefs.quiz_music.current.volume = 0.4;
+        if(audioRefs.quiz_music.current) audioRefs.quiz_music.current.volume = 0.18;
 
         setIsInitialized(true);
         console.log("Audio context initialized.");

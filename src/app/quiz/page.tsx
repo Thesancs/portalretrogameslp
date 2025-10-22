@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -116,11 +116,11 @@ export default function QuizPage() {
     soundContext?.initializeAudio();
   }, [soundContext]);
 
+  const hasStartedQuizMusic = useRef(false);
+
   useEffect(() => {
-    if (!soundContext) return;
-    soundContext.playSound('quiz_start');
     return () => {
-      soundContext.stopSound('quiz_start');
+      soundContext?.stopSound('quiz_music');
     };
   }, [soundContext]);
 
@@ -163,8 +163,8 @@ export default function QuizPage() {
       soundContext?.playSound('coin');
     }
 
-    if (safeStep === 0) {
-      soundContext?.playSound('quiz_music');
+    if (safeStep === 0 && !answers[safeStep]) {
+      soundContext?.playSound('quiz_start');
     }
 
     setAnswer(safeStep, value);
@@ -181,6 +181,14 @@ export default function QuizPage() {
       handleNext();
     }, 1200);
   };
+
+  useEffect(() => {
+    if (!soundContext) return;
+    if (safeStep === 1 && !hasStartedQuizMusic.current) {
+      soundContext.playSound('quiz_music');
+      hasStartedQuizMusic.current = true;
+    }
+  }, [safeStep, soundContext]);
 
   const progressPercentage =
     totalSteps === 0 ? 0 : ((safeStep + 1) / totalSteps) * 100;

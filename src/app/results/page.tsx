@@ -34,7 +34,7 @@ function ResultsContent() {
               <CheckCircle className="h-16 w-16 text-accent" />
             </span>
             <div className="space-y-4">
-              <h2 className="text-3xl font-pixel uppercase text-glow text-primary sm:text-5xl">
+              <h2 className="text-2xl font-pixel uppercase text-glow text-primary sm:text-5xl">
                 Memoria desbloqueada!
               </h2>
               <p className="text-base text-muted-foreground sm:text-lg">
