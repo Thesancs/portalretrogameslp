@@ -154,10 +154,10 @@ export default function SalesPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-6 rounded-3xl border border-primary/30 bg-background/80 p-6 text-center text-sm text-muted-foreground shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-                <p className="text-xs uppercase tracking-[0.35em] text-primary">De R$127,90 por apenas</p>
-                <p className="font-pixel text-5xl text-primary text-glow">R$27,90</p>
-                <p>
+              <div className="flex flex-col gap-6 rounded-3xl border border-primary/30 bg-background/80 p-5 text-center text-sm text-muted-foreground shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-6">
+                <p className="text-xs uppercase tracking-[0.35em] text-primary sm:text-[0.7rem]">De R$127,90 por apenas</p>
+                <p className="font-pixel text-4xl text-primary text-glow sm:text-5xl md:text-6xl">R$27,90</p>
+                <p className="text-xs leading-relaxed sm:text-sm">
                   Menos que um lanche para ter uma vida inteira de memorias desbloqueadas, com atualizacoes e suporte.
                 </p>
                 <Image
@@ -165,11 +165,12 @@ export default function SalesPage() {
                   alt="Metodos de pagamento"
                   width={260}
                   height={44}
-                  className="mx-auto h-10 w-auto object-contain"
+                  className="mx-auto h-9 w-auto max-w-full object-contain sm:h-10"
                 />
                 <Link
-                  href="/checkout"
+                  href="https://checkout.imperiumpay.app/checkout/cmh5gys2g0206nif9y56lh5bb?offer=GFKF3X0"
                   className="btn-pixel w-full px-6 py-4 text-sm tracking-[0.12em] sm:w-auto sm:px-10 sm:py-5 sm:text-lg sm:tracking-[0.28em]"
+                  rel="noreferrer"
                 >
                   Quero reviver agora
                 </Link>
