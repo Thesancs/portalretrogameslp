@@ -156,7 +156,7 @@ export default function SalesPage() {
 
               <div className="flex flex-col gap-6 rounded-3xl border border-primary/30 bg-background/80 p-6 text-center text-sm text-muted-foreground shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl">
                 <p className="text-xs uppercase tracking-[0.35em] text-primary">De R$127,90 por apenas</p>
-                <p className="font-pixel text-5xl text-primary text-glow">R$19,90</p>
+                <p className="font-pixel text-5xl text-primary text-glow">R$27,90</p>
                 <p>
                   Menos que um lanche para ter uma vida inteira de memorias desbloqueadas, com atualizacoes e suporte.
                 </p>
