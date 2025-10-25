@@ -1,6 +1,5 @@
 "use client";
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { Check, CheckCircle, Gamepad2, Tv, Wifi } from 'lucide-react';
@@ -167,13 +166,13 @@ export default function SalesPage() {
                   height={44}
                   className="mx-auto h-9 w-auto max-w-full object-contain sm:h-10"
                 />
-                <Link
+                <a
                   href="https://checkout.imperiumpay.app/checkout/cmh5gys2g0206nif9y56lh5bb?offer=GFKF3X0"
                   className="btn-pixel w-full px-6 py-4 text-sm tracking-[0.12em] sm:w-auto sm:px-10 sm:py-5 sm:text-lg sm:tracking-[0.28em]"
                   rel="noreferrer"
                 >
                   Quero reviver agora
-                </Link>
+                </a>
                 <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
                   Acesso imediato  garantia de 7 dias  suporte vitalicio
                 </p>
