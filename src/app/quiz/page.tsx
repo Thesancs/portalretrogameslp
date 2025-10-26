@@ -117,6 +117,7 @@ export default function QuizPage() {
   }, [soundContext]);
 
   const hasStartedQuizMusic = useRef(false);
+  const animatingOptionRef = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -133,6 +134,7 @@ export default function QuizPage() {
     } else {
       router.push(`/results?score=${score}`);
     }
+    animatingOptionRef.current = null;
     setAnimatingOption(null);
   };
 
@@ -144,30 +146,36 @@ export default function QuizPage() {
   const handleBack = () => {
     if (safeStep > 0) {
       setStep(prev => Math.max(prev - 1, 0));
+      animatingOptionRef.current = null;
       setAnimatingOption(null);
     }
   };
 
   const setAnswer = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
+    setAnswers(prevAnswers => {
+      const nextAnswers = [...prevAnswers];
+      nextAnswers[index] = value;
+      return nextAnswers;
+    });
   };
 
   const handleAnswerSelection = (value: string) => {
-    if (animatingOption || !currentStep) return;
+    if (!currentStep || animatingOptionRef.current) return;
 
-    if (!answers[safeStep]) {
+    const isFirstSelection = !answers[safeStep];
+
+    if (isFirstSelection) {
       const randomPoints = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
       setScore(prevScore => prevScore + randomPoints);
       soundContext?.playSound('coin');
     }
 
-    if (safeStep === 0 && !answers[safeStep]) {
+    if (safeStep === 0 && isFirstSelection) {
       soundContext?.playSound('quiz_start');
     }
 
     setAnswer(safeStep, value);
+    animatingOptionRef.current = value;
     setAnimatingOption(value);
 
     if (safeStep === 2) {
@@ -177,9 +185,12 @@ export default function QuizPage() {
       return;
     }
 
+    const isLastStep = safeStep === totalSteps - 1;
+    const transitionDelay = isLastStep ? 700 : 1200;
+
     setTimeout(() => {
       handleNext();
-    }, 1200);
+    }, transitionDelay);
   };
 
   useEffect(() => {
@@ -225,12 +236,7 @@ export default function QuizPage() {
                   answers[safeStep] === option && 'border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/40',
                 )}
               >
-                <RadioGroupItem
-                  value={option}
-                  id={option}
-                  className="sr-only"
-                  onClick={() => handleAnswerSelection(option)}
-                />
+                <RadioGroupItem value={option} id={option} className="sr-only" />
                 <span>{option}</span>
               </Label>
             ))}
@@ -255,12 +261,7 @@ export default function QuizPage() {
                 answers[safeStep] === option.label && 'border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/40',
               )}
             >
-              <RadioGroupItem
-                value={option.label}
-                id={option.label}
-                className="sr-only"
-                onClick={() => handleAnswerSelection(option.label)}
-              />
+              <RadioGroupItem value={option.label} id={option.label} className="sr-only" />
               {option.image && (
                 <Image
                   src={option.image.imageUrl}
@@ -297,12 +298,7 @@ export default function QuizPage() {
                 answers[safeStep] === optionLabel && 'border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/45',
               )}
             >
-              <RadioGroupItem
-                value={optionLabel}
-                id={optionLabel}
-                className="sr-only"
-                onClick={() => handleAnswerSelection(optionLabel)}
-              />
+              <RadioGroupItem value={optionLabel} id={optionLabel} className="sr-only" />
               <div className="flex w-full items-center gap-4">
                 {Icon && (
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/40 bg-background/60">
@@ -391,9 +387,9 @@ export default function QuizPage() {
                 Voltar
               </Button>
               {safeStep === totalSteps - 1 ? (
-                <Button onClick={handleNext} disabled={!answers[safeStep]}>
-                  Ver resultado
-                </Button>
+                <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+                  {answers[safeStep] ? 'Preparando seu resultado...' : 'Escolha uma opcao para finalizar'}
+                </p>
               ) : (
                 <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
                   Escolha uma opcao para avancar
