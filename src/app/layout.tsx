@@ -53,7 +53,7 @@ document.head.appendChild(a);`,
             <span className="orb bottom-10 right-[-40px] h-60 w-60" />
             <Header />
             <div className="relative z-10 bg-primary/90 text-primary-foreground font-pixel text-center py-2 text-[10px] sm:text-xs tracking-[0.5em] uppercase shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
-              {`Aproveite agora nosso desconto exclusivo para o dia ${currentDate}`}
+              Acesso Ilimitado aos Jogos dos Sonhos: Bem-Vindo à Biblioteca Definitiva! Mais de 9 Mil Jogos Retrô.
             </div>
             <main className="relative z-10 flex-1">{children}</main>
             <AudioPlayer />
