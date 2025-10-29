@@ -167,7 +167,7 @@ export default function SalesPage() {
                   className="mx-auto h-9 w-auto max-w-full object-contain sm:h-10"
                 />
                 <a
-                  href="https://pay.kirvano.com/29d1a2bb-e282-483d-831f-e14b6634cc5c"
+                  href="https://pay.cakto.com.br/93kemsh_626762"
                   className="btn-pixel w-full px-6 py-4 text-sm tracking-[0.12em] sm:w-auto sm:px-10 sm:py-5 sm:text-lg sm:tracking-[0.28em]"
                   rel="noreferrer"
                 >
